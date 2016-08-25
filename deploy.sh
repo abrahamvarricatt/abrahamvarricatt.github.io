@@ -47,10 +47,10 @@ fi
 
 # Commit the 'changes'
 # Delta will show diffs between new and old
-git add .
+git add --all .
 git commit -m "Deploy to GitHub Pages: ${SHA}"
 
 # push repo using HTTPS
 # ref: http://stackoverflow.com/a/33125422/198660
-git push -f -q $HTTPS_REPO $TARGET_BRANCH &2>/dev/null
+git push -f -q $HTTPS_REPO $TARGET_BRANCH 2>&1
 
