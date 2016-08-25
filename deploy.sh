@@ -18,7 +18,7 @@ fi
 
 # Save some useful information
 REPO=`git config remote.origin.url`
-HTTPS_REPO=https://nikolabot4abrahamvarricatt:$GITHUB_API_KEY@github.com/note2self-abrahamvarricatt/note2self-abrahamvarricatt.git
+HTTPS_REPO=https://nikolabot4abrahamvarricatt:$GITHUB_API_KEY@github.com/note2self-abrahamvarricatt/note2self-abrahamvarricatt.github.io.git
 SHA=`git rev-parse --verify HEAD`
 
 # Clone the existing TARGET_BRANCH for this repo into output/
@@ -39,11 +39,11 @@ cd output
 git config user.name "Travis CI"
 git config user.email "Travis CI"
 
-# If there are no changes to the compiled out (e.g. this is a README update) then just bail.
-if [ -z `git diff --exit-code` ]; then
-    echo "No changes to the output on this push; exiting."
-    exit 0
-fi
+## If there are no changes to the compiled out (e.g. this is a README update) then just bail.
+#if [ -z `git diff --exit-code` ]; then
+#    echo "No changes to the output on this push; exiting."
+#    exit 0
+#fi
 
 # Commit the 'changes'
 # Delta will show diffs between new and old
