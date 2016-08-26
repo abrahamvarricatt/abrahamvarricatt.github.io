@@ -6,7 +6,7 @@ import time
 # Data about this site
 BLOG_AUTHOR = "chronodekar"
 BLOG_TITLE = "Note To Self"
-SITE_URL = "http://note2self.abraham-v.com/"
+SITE_URL = "https://note2self.abraham-v.com/"
 BLOG_EMAIL = "no@email.here"
 BLOG_DESCRIPTION = "Snippets of information"
 
