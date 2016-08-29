@@ -25,6 +25,7 @@ Vagrant
 This is like a manager for virtual systems. It supports other virtulaization tools like vmware, but for my needs it acts as a wrapper around virtualbox. I like to think of it as a way to store my virtualbox settings in a textfile which I can add to the VCS. This makes it very easy to share with collegues and friends. Just send them the ``Vagrantfile`` configuration and ask them to run a single command,
 
 .. code:: shell
+
     $ vagrant up
 
 Because of the way vagrant works, it cannot use distribution ISO files directly. Instead, the project introduces something called Vagrant Boxes. These are a set of pre-build virutal images which can be used for testing. 
@@ -36,6 +37,7 @@ Fortunately, there is an open source movement working to keep stable vagrant-box
 And this is what I use these days to setup an isolated environment,
 
 .. code:: shell
+
     $ vagrant init bento/centos-7.2
     $ vagrant up
 
