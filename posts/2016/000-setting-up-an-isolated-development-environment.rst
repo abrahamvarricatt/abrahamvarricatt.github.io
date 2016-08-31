@@ -1,6 +1,6 @@
 .. title: Setting up an isolated development environment
 .. date: 2016-08-29 20:06:00
-.. tags:
+.. tags: vagrant, virtualbox
 
 I've lost count of how many times I've re-installed my operating system, just because of tool-bloat. For one project or the other, a tool or utility would be installed on my system, then another and before I knew it - either my computer would slow down or the different tools would have conflicts between themselves. Even if that didn't happen there were times when I would want to re-format my system, just to bring it to a 'fresh' state. 
 
