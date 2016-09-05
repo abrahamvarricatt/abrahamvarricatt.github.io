@@ -86,5 +86,5 @@ Now, this is a nice bit of code. The author changes the problem from one of matc
 
 The top-voted entry however, is in a class of it's own. It actually manages to reduce the time-complexity of the solution to O(n) - something I wasn't sure was possible! The author makes use of a dictionary like I did, but exploits the in-built ``pop()`` and ``append()`` operations available for any python list. I had forgotten about ``pop()`` in lists until I saw this solution. What's really nice is how the author makes use of the ``list[-1]`` notation to grab the last element of the solution-list to compare with the current iterated elment. Damn! I wish I'd remembered that.
 
-Compared to all this, my solution just looks needlessly complicated and embarassing. 
+Compared to all this, my solution just looks needlessly complicated and embarrassing.
 
