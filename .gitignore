@@ -1,3 +1,7 @@
 VENV
 __pycache__/
+cache/
+.idea/
+output/
+.doit.db
 
