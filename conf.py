@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import time
 
 # Data about this site
-BLOG_AUTHOR = "chronodekar"
+BLOG_AUTHOR = "Abraham_V"
 BLOG_TITLE = "Note To Self"
 SITE_URL = "https://note2self.abraham-v.com/"
 BLOG_EMAIL = "no@email.here"

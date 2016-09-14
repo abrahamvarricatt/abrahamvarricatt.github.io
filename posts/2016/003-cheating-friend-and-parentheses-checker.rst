@@ -2,7 +2,7 @@
 .. date: 2016-09-14 19:20:00
 .. tags: puzzle, python
 
-I've got two puzzles from Code Wars <https://www.codewars.com/>`_ today. The first one is,
+I've got two puzzles from `Code Wars <https://www.codewars.com/>`_ today. The first one is,
 
 A friend of mine takes a sequence of numbers from 1 to n (n > 0). Within that sequence he chooses two numbers A and B.
 He claims that the product (A * B) should be equal to the sum of all the numbers in the sequence, excluding A and B (
