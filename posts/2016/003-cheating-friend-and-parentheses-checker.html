@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puzzles: Cheating Friend and Parentheses Checker | Note To Self</title>
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://note2self.abraham-v.com/posts/2016/003-cheating-friend-and-parentheses-checker.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Abraham_V">
+<link rel="prev" href="002-roman-numeral-encoder.html" title="Puzzle: Roman Numeral Encoder" type="text/html">
+<meta property="og:site_name" content="Note To Self">
+<meta property="og:title" content="Puzzles: Cheating Friend and Parentheses Checker">
+<meta property="og:url" content="https://note2self.abraham-v.com/posts/2016/003-cheating-friend-and-parentheses-checker.html">
+<meta property="og:description" content="I've got two puzzles from Code Wars today. The first one is,
+A friend of mine takes a sequence of numbers from 1 to n (n &gt; 0). Within that sequence he chooses two numbers A and B.
+He claims that the p">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-09-14T19:20:00+05:30">
+<meta property="article:tag" content="puzzle">
+<meta property="article:tag" content="python">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://note2self.abraham-v.com/">
+
+                <span id="blog-title">Note To Self</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archives</a>
+                </li>
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="003-cheating-friend-and-parentheses-checker.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Puzzles: Cheating Friend and Parentheses Checker</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Abraham_V
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2016-09-14T19:20:00+05:30" itemprop="datePublished" title="2016-09-14 19:20">2016-09-14 19:20</time></a></p>
+            
+        <p class="sourceline"><a href="003-cheating-friend-and-parentheses-checker.rst" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I've got two puzzles from <a class="reference external" href="https://www.codewars.com/">Code Wars</a> today. The first one is,</p>
+<p>A friend of mine takes a sequence of numbers from 1 to n (n &gt; 0). Within that sequence he chooses two numbers A and B.
+He claims that the product (A * B) should be equal to the sum of all the numbers in the sequence, excluding A and B (
+i.e. SUM - (A+B) ). Given a number n, can you identify all the number pairs which match the earlier assertion?</p>
+<p>The question wanted me to return the answer as a list. Perfect opportunity for my list comprehension skills! But that
+would mean reducing the solution to a form of only one variable. Here's how I performed the reduction,</p>
+<pre class="code text"><a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-1"></a>A * B     = SUM - (A + B)
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-2"></a>          = SUM - A - B
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-3"></a>AB + B    = SUM - A
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-4"></a>B (A + 1) = SUM - A
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-5"></a>B         = SUM - A/(A + 1)
+</pre>
+<p>A simple formula for B in terms of SUM and variable A! Here's the solution I came up with,</p>
+<pre class="code python"><a name="rest_code_9a5b958b7b864cb6abe0b0d4c732872d-1"></a><span class="k">def</span> <span class="nf">removNb</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_9a5b958b7b864cb6abe0b0d4c732872d-2"></a>    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<a name="rest_code_9a5b958b7b864cb6abe0b0d4c732872d-3"></a>    <span class="k">return</span> <span class="p">[(</span><span class="n">A</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">total</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span> <span class="k">for</span> <span class="n">A</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">float</span><span class="p">((</span><span class="n">total</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">total</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</pre>
+<p>The line extends a bit too much to the side, but it's a compact solution which fit in well with the other results. My
+skills are improving! :)</p>
+<p>Another solution which caught my attention is this,</p>
+<pre class="code python"><a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-1"></a><span class="kn">import</span> <span class="nn">math</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-2"></a>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-3"></a><span class="k">def</span> <span class="nf">removNb</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-4"></a>    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-5"></a>    <span class="n">tot</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-6"></a>    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tot</span><span class="p">)),</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-7"></a>        <span class="n">b</span> <span class="o">=</span> <span class="n">tot</span><span class="o">%</span><span class="n">a</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-8"></a>        <span class="k">if</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">==</span><span class="n">tot</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">:</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-9"></a>            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-10"></a>            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-11"></a>    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre>
+<p>Nothing too revolutionary about this one, but it just <em>feels</em> inelegant. One thing that's not so inelegant is the
+assertion made that B = SUM % A. Which, I couldn't understand. Fortunately, a comment explained it,</p>
+<pre class="code text"><a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-1"></a>SUM - (A + B) = A * B
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-2"></a>SUM           = A * B + (A + B)
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-3"></a>{ Perform % A operation on both sides }
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-4"></a>SUM % A       = (A * B + (A + B)) % A
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-5"></a>              = (A * B) % A) + ((A + B) % A)
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-6"></a>              = ((A % A) * (B % A)) + ((A % A) + (B % A))
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-7"></a>              = (0 * (B % A)) + (0 + (B % A))
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-8"></a>              = B % A
+</pre>
+<p>That's some very impressive mathematics right there!</p>
+<p>The second puzzle is about parenthesis matching. i.e. these things - <tt class="docutils literal">()</tt>. The problem was to identify if they are
+ordered correctly in an input string. Which means something like <tt class="docutils literal"><span class="pre">(())</span></tt> is valid but <tt class="docutils literal"><span class="pre">())(</span></tt> is not. My solution
+went like this,</p>
+<pre class="code python"><a name="rest_code_edd2d35b31b245b893a93e59afaeef16-1"></a><span class="k">def</span> <span class="nf">valid_parentheses</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-2"></a>    <span class="n">status</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-3"></a>    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-4"></a>        <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">'('</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-5"></a>            <span class="n">status</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-6"></a>        <span class="k">elif</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">')'</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-7"></a>            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-8"></a>                <span class="k">return</span> <span class="bp">False</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-9"></a>            <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-10"></a>                <span class="n">status</span> <span class="o">-=</span> <span class="mi">1</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-11"></a>    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-12"></a>        <span class="k">return</span> <span class="bp">True</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-13"></a>    <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-14"></a>        <span class="k">return</span> <span class="bp">False</span>
+</pre>
+<p>As valid as that is, it just felt a bit too big. But how could I reduce it any further, while maintaining its
+readability? The top voted answer showed me,</p>
+<pre class="code python"><a name="rest_code_86c367f6987a434bb15593a74a7365ac-1"></a><span class="k">def</span> <span class="nf">valid_parentheses</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-2"></a>    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-3"></a>    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-4"></a>        <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">'('</span><span class="p">:</span> <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-5"></a>        <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">')'</span><span class="p">:</span> <span class="n">cnt</span> <span class="o">-=</span> <span class="mi">1</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-6"></a>        <span class="k">if</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="bp">False</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-7"></a>    <span class="k">return</span> <span class="bp">True</span> <span class="k">if</span> <span class="n">cnt</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">False</span>
+</pre>
+<p>In an odd sort of way, I'm a bit disappointed to see this. It reads really well, but implies that my Python skills need
+polishing - just as I was feeling good about them!</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/puzzle.html" rel="tag">puzzle</a></li>
+            <li><a class="tag p-category" href="../../categories/python.html" rel="tag">python</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="002-roman-numeral-encoder.html" rel="prev" title="Puzzle: Roman Numeral Encoder">Previous post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:no@email.here">Abraham_V</a> - Powered by<a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

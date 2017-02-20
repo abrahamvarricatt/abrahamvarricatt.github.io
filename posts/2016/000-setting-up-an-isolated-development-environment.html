@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setting up an isolated development environment | Note To Self</title>
+<link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="https://note2self.abraham-v.com/posts/2016/000-setting-up-an-isolated-development-environment.html">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Abraham_V">
+<link rel="next" href="001-directions-reduction.html" title="Puzzle: Directions Reduction" type="text/html">
+<meta property="og:site_name" content="Note To Self">
+<meta property="og:title" content="Setting up an isolated development environment">
+<meta property="og:url" content="https://note2self.abraham-v.com/posts/2016/000-setting-up-an-isolated-development-environment.html">
+<meta property="og:description" content="I've lost count of how many times I've re-installed my operating system, just because of tool-bloat. For one project or the other, a tool or utility would be installed on my system, then another and b">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-08-29T20:06:00+05:30">
+<meta property="article:tag" content="vagrant">
+<meta property="article:tag" content="virtualbox">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://note2self.abraham-v.com/">
+
+                <span id="blog-title">Note To Self</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../archive.html">Archives</a>
+                </li>
+<li>
+<a href="../../categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="../../rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="000-setting-up-an-isolated-development-environment.rst" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="#" class="u-url">Setting up an isolated development environment</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Abraham_V
+            </span></p>
+            <p class="dateline"><a href="#" rel="bookmark"><time class="published dt-published" datetime="2016-08-29T20:06:00+05:30" itemprop="datePublished" title="2016-08-29 20:06">2016-08-29 20:06</time></a></p>
+            
+        <p class="sourceline"><a href="000-setting-up-an-isolated-development-environment.rst" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>I've lost count of how many times I've re-installed my operating system, just because of tool-bloat. For one project or the other, a tool or utility would be installed on my system, then another and before I knew it - either my computer would slow down or the different tools would have conflicts between themselves. Even if that didn't happen there were times when I would want to re-format my system, just to bring it to a 'fresh' state.</p>
+<p>This was a process that was proving to be very time-consuming - and often enough, risky as well. If I didn't have a spare internet connected device nearby, I might configure the installer to provide me with a brick! Surely, I could find a better use of my time than spending a significant portion of the month reinstalling my computer? Searching for a solution to this problem I came across,</p>
+<div class="section" id="virtualbox">
+<h2>VirtualBox</h2>
+<p>It seemed perfect for my needs - a relatively cheap way to bring up an experimental system, work with it and best of all - easy to destroy and recover from! I cannot describe how liberating it was to be able to create a virtual system for quick (and possibly destructive) experiment without worrying about damaging my host system!</p>
+<p>Granted, there were a few drawbacks - I lost out a bit on performace - some compiles took longer to complete than before, but for testing functionality - it did the job. One thing that it didn't quite solve for me, was the issue of configuration.</p>
+<p>Each and every time I needed to boot up a new virtual system, I would still have to spend a considerable effort just setting it up - root usernames, passwords, network settings, disk partitions . . . etc. And this doesn't quite cover the matter of sharing my work. Explaining to a collegue how to setup their own virtual enviroment meant writing a lot of documentation which was a pain to keep updated.</p>
+<p>Quite by accident I then discovered,</p>
+</div>
+<div class="section" id="vagrant">
+<h2>Vagrant</h2>
+<p>This is like a manager for virtual systems. It supports other virtulaization tools like vmware, but for my needs it acts as a wrapper around virtualbox. I like to think of it as a way to store my virtualbox settings in a textfile which I can add to the VCS. This makes it very easy to share with collegues and friends. Just send them the <tt class="docutils literal">Vagrantfile</tt> configuration and ask them to run a single command,</p>
+<pre class="code shell"><a name="rest_code_28bae2aaaf594d7f9a2627cdea82753a-1"></a>$ vagrant up
+</pre>
+<p>Because of the way vagrant works, it cannot use distribution ISO files directly. Instead, the project introduces something called Vagrant Boxes. These are a set of pre-build virutal images which can be used for testing.</p>
+<p>Recently, I encountered a very odd (and frustrating!) situation - Canonical or CentOS do not maintain updated versions of their operating systems in the vagrant-box archive. Sure, they publish the most recent builds to the archive, but after downloading, spending hours trying to fight against subtle bugs (eg: centos does not sync the <tt class="docutils literal">/vagrant</tt> folder between guest and host very well - data just goes <em>missing</em> after a reboot!), I had enough. And it looks like I'm not alone.</p>
+<p>Fortunately, there is an open source movement working to keep stable vagrant-boxes in the archive - <a class="reference external" href="http://chef.github.io/bento/">the bento project</a>. It's run by the folks behind Chef - a system provisioning tool (I perfer ansible).</p>
+<p>And this is what I use these days to setup an isolated environment,</p>
+<pre class="code shell"><a name="rest_code_fb5e7080d9264ca484408f5c467ed9b1-1"></a>$ vagrant init bento/centos-7.2
+<a name="rest_code_fb5e7080d9264ca484408f5c467ed9b1-2"></a>$ vagrant up
+</pre>
+<p>Change the init box to use whichever OS is needed.</p>
+</div>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/vagrant.html" rel="tag">vagrant</a></li>
+            <li><a class="tag p-category" href="../../categories/virtualbox.html" rel="tag">virtualbox</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="next">
+                <a href="001-directions-reduction.html" rel="next" title="Puzzle: Directions Reduction">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:no@email.here">Abraham_V</a> - Powered by<a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/jquery.min.js"></script><script src="../../assets/js/bootstrap.min.js"></script><script src="../../assets/js/moment-with-locales.min.js"></script><script src="../../assets/js/fancydates.js"></script><script src="../../assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

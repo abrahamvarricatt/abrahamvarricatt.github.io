@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Snippets of information">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Note To Self</title>
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="assets/css/colorbox.css" rel="stylesheet" type="text/css">
+<link href="assets/css/theme.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="canonical" href="https://note2self.abraham-v.com/index.html">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/2016/003-cheating-friend-and-parentheses-checker.html" type="text/html">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://note2self.abraham-v.com/">
+
+                <span id="blog-title">Note To Self</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="archive.html">Archives</a>
+                </li>
+<li>
+<a href="categories/index.html">Tags</a>
+                </li>
+<li>
+<a href="rss.xml">RSS feed</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right"></ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+
+    
+<div class="postindex">
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/2016/003-cheating-friend-and-parentheses-checker.html" class="u-url">Puzzles: Cheating Friend and Parentheses Checker</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Abraham_V
+            </span></p>
+            <p class="dateline"><a href="posts/2016/003-cheating-friend-and-parentheses-checker.html" rel="bookmark"><time class="published dt-published" datetime="2016-09-14T19:20:00+05:30" title="2016-09-14 19:20">2016-09-14 19:20</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>I've got two puzzles from <a class="reference external" href="https://www.codewars.com/">Code Wars</a> today. The first one is,</p>
+<p>A friend of mine takes a sequence of numbers from 1 to n (n &gt; 0). Within that sequence he chooses two numbers A and B.
+He claims that the product (A * B) should be equal to the sum of all the numbers in the sequence, excluding A and B (
+i.e. SUM - (A+B) ). Given a number n, can you identify all the number pairs which match the earlier assertion?</p>
+<p>The question wanted me to return the answer as a list. Perfect opportunity for my list comprehension skills! But that
+would mean reducing the solution to a form of only one variable. Here's how I performed the reduction,</p>
+<pre class="code text"><a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-1"></a>A * B     = SUM - (A + B)
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-2"></a>          = SUM - A - B
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-3"></a>AB + B    = SUM - A
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-4"></a>B (A + 1) = SUM - A
+<a name="rest_code_6ffeed12f59c48bbb92d871ae91e3a17-5"></a>B         = SUM - A/(A + 1)
+</pre>
+<p>A simple formula for B in terms of SUM and variable A! Here's the solution I came up with,</p>
+<pre class="code python"><a name="rest_code_9a5b958b7b864cb6abe0b0d4c732872d-1"></a><span class="k">def</span> <span class="nf">removNb</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_9a5b958b7b864cb6abe0b0d4c732872d-2"></a>    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<a name="rest_code_9a5b958b7b864cb6abe0b0d4c732872d-3"></a>    <span class="k">return</span> <span class="p">[(</span><span class="n">A</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">total</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)))</span> <span class="k">for</span> <span class="n">A</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">float</span><span class="p">((</span><span class="n">total</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">total</span> <span class="o">-</span> <span class="n">A</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+</pre>
+<p>The line extends a bit too much to the side, but it's a compact solution which fit in well with the other results. My
+skills are improving! :)</p>
+<p>Another solution which caught my attention is this,</p>
+<pre class="code python"><a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-1"></a><span class="kn">import</span> <span class="nn">math</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-2"></a>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-3"></a><span class="k">def</span> <span class="nf">removNb</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-4"></a>    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-5"></a>    <span class="n">tot</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-6"></a>    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tot</span><span class="p">)),</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-7"></a>        <span class="n">b</span> <span class="o">=</span> <span class="n">tot</span><span class="o">%</span><span class="n">a</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-8"></a>        <span class="k">if</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">==</span><span class="n">tot</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">:</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-9"></a>            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-10"></a>            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+<a name="rest_code_21aa4cea34a14f1885f0e9cf5210a1d2-11"></a>    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre>
+<p>Nothing too revolutionary about this one, but it just <em>feels</em> inelegant. One thing that's not so inelegant is the
+assertion made that B = SUM % A. Which, I couldn't understand. Fortunately, a comment explained it,</p>
+<pre class="code text"><a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-1"></a>SUM - (A + B) = A * B
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-2"></a>SUM           = A * B + (A + B)
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-3"></a>{ Perform % A operation on both sides }
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-4"></a>SUM % A       = (A * B + (A + B)) % A
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-5"></a>              = (A * B) % A) + ((A + B) % A)
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-6"></a>              = ((A % A) * (B % A)) + ((A % A) + (B % A))
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-7"></a>              = (0 * (B % A)) + (0 + (B % A))
+<a name="rest_code_2ad2e7e46ab44f2299189f7f330d6a01-8"></a>              = B % A
+</pre>
+<p>That's some very impressive mathematics right there!</p>
+<p>The second puzzle is about parenthesis matching. i.e. these things - <tt class="docutils literal">()</tt>. The problem was to identify if they are
+ordered correctly in an input string. Which means something like <tt class="docutils literal"><span class="pre">(())</span></tt> is valid but <tt class="docutils literal"><span class="pre">())(</span></tt> is not. My solution
+went like this,</p>
+<pre class="code python"><a name="rest_code_edd2d35b31b245b893a93e59afaeef16-1"></a><span class="k">def</span> <span class="nf">valid_parentheses</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-2"></a>    <span class="n">status</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-3"></a>    <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-4"></a>        <span class="k">if</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">'('</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-5"></a>            <span class="n">status</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-6"></a>        <span class="k">elif</span> <span class="n">letter</span> <span class="o">==</span> <span class="s1">')'</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-7"></a>            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-8"></a>                <span class="k">return</span> <span class="bp">False</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-9"></a>            <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-10"></a>                <span class="n">status</span> <span class="o">-=</span> <span class="mi">1</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-11"></a>    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-12"></a>        <span class="k">return</span> <span class="bp">True</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-13"></a>    <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_edd2d35b31b245b893a93e59afaeef16-14"></a>        <span class="k">return</span> <span class="bp">False</span>
+</pre>
+<p>As valid as that is, it just felt a bit too big. But how could I reduce it any further, while maintaining its
+readability? The top voted answer showed me,</p>
+<pre class="code python"><a name="rest_code_86c367f6987a434bb15593a74a7365ac-1"></a><span class="k">def</span> <span class="nf">valid_parentheses</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-2"></a>    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-3"></a>    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-4"></a>        <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">'('</span><span class="p">:</span> <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-5"></a>        <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">')'</span><span class="p">:</span> <span class="n">cnt</span> <span class="o">-=</span> <span class="mi">1</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-6"></a>        <span class="k">if</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="bp">False</span>
+<a name="rest_code_86c367f6987a434bb15593a74a7365ac-7"></a>    <span class="k">return</span> <span class="bp">True</span> <span class="k">if</span> <span class="n">cnt</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">False</span>
+</pre>
+<p>In an odd sort of way, I'm a bit disappointed to see this. It reads really well, but implies that my Python skills need
+polishing - just as I was feeling good about them!</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/2016/002-roman-numeral-encoder.html" class="u-url">Puzzle: Roman Numeral Encoder</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Abraham_V
+            </span></p>
+            <p class="dateline"><a href="posts/2016/002-roman-numeral-encoder.html" rel="bookmark"><time class="published dt-published" datetime="2016-09-05T20:48:00+05:30" title="2016-09-05 20:48">2016-09-05 20:48</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>This is another one from <a class="reference external" href="https://www.codewars.com/">Code Wars</a> - write a function to convert an integer into the
+string representation of itself, in the <a class="reference external" href="https://en.wikipedia.org/wiki/Roman_numerals">roman numeral format</a>.</p>
+<p>The wikipedia page tells us the symbols used in the Roman numeral alphabet as well as how to count them. After studying
+this, I came to the realization that the basic sequence was repeated for every digit - the letters were the different,
+but for every digit in our base-10 system, the pattern to write them in the Roman pattern was the same! Surely, I could
+make use of this insight in my solution? Which was how I came up with this,</p>
+<pre class="code python"><a name="rest_code_4c9929fb246e404699544c3c6f969065-1"></a><span class="n">digit_map</span> <span class="o">=</span> <span class="p">[</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-2"></a>    <span class="c1"># For one's location</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-3"></a>    <span class="p">{</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-4"></a>        <span class="s1">'1'</span><span class="p">:</span> <span class="s1">'I'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-5"></a>        <span class="s1">'5'</span><span class="p">:</span> <span class="s1">'V'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-6"></a>        <span class="s1">'0'</span><span class="p">:</span> <span class="s1">'X'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-7"></a>    <span class="p">},</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-8"></a>    <span class="c1"># For ten's location</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-9"></a>    <span class="p">{</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-10"></a>        <span class="s1">'1'</span><span class="p">:</span> <span class="s1">'X'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-11"></a>        <span class="s1">'5'</span><span class="p">:</span> <span class="s1">'L'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-12"></a>        <span class="s1">'0'</span><span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-13"></a>    <span class="p">},</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-14"></a>    <span class="c1"># For hundred's location</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-15"></a>    <span class="p">{</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-16"></a>        <span class="s1">'1'</span><span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-17"></a>        <span class="s1">'5'</span><span class="p">:</span> <span class="s1">'D'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-18"></a>        <span class="s1">'0'</span><span class="p">:</span> <span class="s1">'M'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-19"></a>    <span class="p">},</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-20"></a>    <span class="c1"># For thousand's location</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-21"></a>    <span class="p">{</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-22"></a>        <span class="s1">'1'</span><span class="p">:</span> <span class="s1">'M'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-23"></a>        <span class="s1">'5'</span><span class="p">:</span> <span class="s1">'5'</span><span class="p">,</span>  <span class="c1"># not sure beyond this</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-24"></a>        <span class="s1">'0'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-25"></a>    <span class="p">},</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-26"></a><span class="p">]</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-27"></a>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-28"></a><span class="k">def</span> <span class="nf">translate_digit</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="n">letter_map</span><span class="p">):</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-29"></a>    <span class="n">digit_map_dict</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-30"></a>        <span class="s1">'0'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-31"></a>        <span class="s1">'1'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-32"></a>        <span class="s1">'2'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-33"></a>        <span class="s1">'3'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-34"></a>        <span class="s1">'4'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'5'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-35"></a>        <span class="s1">'5'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'5'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-36"></a>        <span class="s1">'6'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'5'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-37"></a>        <span class="s1">'7'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'5'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-38"></a>        <span class="s1">'8'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'5'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-39"></a>        <span class="s1">'9'</span><span class="p">:</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'1'</span><span class="p">]</span> <span class="o">+</span> <span class="n">letter_map</span><span class="p">[</span><span class="s1">'0'</span><span class="p">],</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-40"></a>    <span class="p">}</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-41"></a>    <span class="k">return</span> <span class="n">digit_map_dict</span><span class="p">[</span><span class="n">digit</span><span class="p">]</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-42"></a>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-43"></a><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-44"></a>    <span class="n">result</span> <span class="o">=</span> <span class="s1">''</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-45"></a>    <span class="k">for</span> <span class="n">position</span><span class="p">,</span> <span class="n">digit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-46"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">translate_digit</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="n">digit_map</span><span class="p">[</span><span class="n">position</span><span class="p">])</span> <span class="o">+</span> <span class="n">result</span>
+<a name="rest_code_4c9929fb246e404699544c3c6f969065-47"></a>    <span class="k">return</span> <span class="n">result</span>
+</pre>
+<p>Something about the above solution that I was proud of was the use of <tt class="docutils literal">enumerate()</tt> in the for-loop. In the initial
+write-up, I used a local variable to keep track of the position, but after investigating for a more Pythonic way of
+coding, the above solution came to me. One nice tactic I learned was the fast shortcut to reverse a string in Python.
+Just add <tt class="docutils literal"><span class="pre">[::-1]</span></tt> to the end of the string. It treats the string as a list without a start/end location, but
+increments backwards - effectively reversing it!</p>
+<p>Regardless, there's one thing about my solution that cannot be denied - it's long. That's not really an issue by
+itself, but a part of me just felt like there should be a better way of handling that logic - and I couldn't figure
+out what that was. Soo, onto the top answers to the puzzle!</p>
+<pre class="code python"><a name="rest_code_a0cd858046c24f5883d48482dd444c29-1"></a><span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-2"></a>    <span class="n">roman_numerals</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-3"></a>        <span class="mi">1000</span><span class="p">:</span><span class="s1">'M'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-4"></a>        <span class="mi">900</span><span class="p">:</span> <span class="s1">'CM'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-5"></a>        <span class="mi">500</span><span class="p">:</span> <span class="s1">'D'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-6"></a>        <span class="mi">400</span><span class="p">:</span> <span class="s1">'CD'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-7"></a>        <span class="mi">100</span><span class="p">:</span> <span class="s1">'C'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-8"></a>        <span class="mi">90</span><span class="p">:</span> <span class="s1">'XC'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-9"></a>        <span class="mi">50</span><span class="p">:</span> <span class="s1">'L'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-10"></a>        <span class="mi">40</span><span class="p">:</span> <span class="s1">'XL'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-11"></a>        <span class="mi">10</span><span class="p">:</span> <span class="s1">'X'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-12"></a>        <span class="mi">9</span><span class="p">:</span> <span class="s1">'IX'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-13"></a>        <span class="mi">5</span><span class="p">:</span> <span class="s1">'V'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-14"></a>        <span class="mi">4</span><span class="p">:</span> <span class="s1">'IV'</span><span class="p">,</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-15"></a>        <span class="mi">1</span><span class="p">:</span> <span class="s1">'I'</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-16"></a>    <span class="p">}</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-17"></a>    <span class="n">roman_string</span> <span class="o">=</span> <span class="s1">''</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-18"></a>    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">roman_numerals</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-19"></a>        <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="n">key</span><span class="p">:</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-20"></a>            <span class="n">roman_string</span> <span class="o">+=</span> <span class="n">roman_numerals</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-21"></a>            <span class="n">n</span> <span class="o">-=</span> <span class="n">key</span>
+<a name="rest_code_a0cd858046c24f5883d48482dd444c29-22"></a>    <span class="k">return</span> <span class="n">roman_string</span>
+</pre>
+<p>And this puts my answer to such shame, that it makes it seem down-right pathetic! But damn, isn't this admirable? This might
+arguably, be the first time I'm seeing someone use integers as keys in a python dictionary. It's a feature that I've
+seen in documentation, but not in actual use. At first, the solution didn't make sense to me - to exploit the numbers,
+you would need a guarantee that they would be picked up in order when looping over them - something which the
+documentation for a Python dictionary states as not possible!</p>
+<p>It was then that I noticed the <tt class="docutils literal">reverse=True</tt> part. What would that be passed to? A <tt class="docutils literal">sorted()</tt> function? How would
+that work ..? And then, it hit me! Every Python dictionary has a method called <tt class="docutils literal">keys()</tt> which returns a list of all
+the keys present in the dictionary. What this solution does is sort that list and pass it on as an iterator to a
+for-loop. Sheer brilliance! Don't bother iterating the dictionary - if you need it sorted; grab the keys, sort and loop
+over them instead!</p>
+<p>Doing things in this manner also assures us that the Roman translation is handled from the highest to lowest base-10
+digit - allowing us to just append the translated string as we go along - bypassing the need for my earlier prepend
+logic.</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/2016/001-directions-reduction.html" class="u-url">Puzzle: Directions Reduction</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Abraham_V
+            </span></p>
+            <p class="dateline"><a href="posts/2016/001-directions-reduction.html" rel="bookmark"><time class="published dt-published" datetime="2016-08-31T08:07:00+05:30" title="2016-08-31 08:07">2016-08-31 08:07</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>I came across a puzzle on <a class="reference external" href="https://www.codewars.com/">Code Wars</a> a short while ago. The core question could be summarized as follows,</p>
+<p>Given a list of directions, reduce the amount of backtracking needed to arrive at a destination. For example, if <tt class="docutils literal"><span class="pre">plan=['NORTH',</span> 'SOUTH', 'SOUTH', 'EAST', 'WEST', 'NORTH', 'WEST']</tt> it can be reduced to <tt class="docutils literal"><span class="pre">plan=['WEST']</span></tt>. The idea, is that opposite directions that are adjacent to each other should be reduced, i.e. <tt class="docutils literal">'NORTH'</tt> cancels out <tt class="docutils literal">'SOUTH'</tt> and <tt class="docutils literal">'EAST'</tt> cancels out <tt class="docutils literal">'WEST'</tt>. A leeway the question gives is that you do not need to worry about circular cancellations. i.e. something like <tt class="docutils literal">['NORTH', 'EAST', 'SOUTH', 'WEST']</tt> stays the way it is.</p>
+<p>After pondering on the puzzle for a bit, I came to the following solution,</p>
+<pre class="code python"><a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-1"></a><span class="n">reduce_direction</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-2"></a>  <span class="s1">'NORTH'</span><span class="p">:</span> <span class="s1">'SOUTH'</span><span class="p">,</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-3"></a>  <span class="s1">'SOUTH'</span><span class="p">:</span> <span class="s1">'NORTH'</span><span class="p">,</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-4"></a>  <span class="s1">'EAST'</span><span class="p">:</span> <span class="s1">'WEST'</span><span class="p">,</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-5"></a>  <span class="s1">'WEST'</span><span class="p">:</span> <span class="s1">'EAST'</span><span class="p">,</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-6"></a>  <span class="s1">''</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-7"></a><span class="p">}</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-8"></a>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-9"></a><span class="k">def</span> <span class="nf">dirReduc</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-10"></a>        <span class="n">updated</span> <span class="o">=</span> <span class="bp">True</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-11"></a>        <span class="k">while</span> <span class="n">updated</span><span class="p">:</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-12"></a>                <span class="n">updated</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># reset marker</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-13"></a>                <span class="n">current_result</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-14"></a>                <span class="n">previous_entry</span> <span class="o">=</span> <span class="s1">''</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-15"></a>                <span class="k">for</span> <span class="n">pos</span><span class="p">,</span> <span class="n">current_entry</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-16"></a>                        <span class="k">if</span> <span class="n">reduce_direction</span><span class="p">[</span><span class="n">previous_entry</span><span class="p">]</span> <span class="o">==</span> <span class="n">current_entry</span><span class="p">:</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-17"></a>                                <span class="n">previous_entry</span> <span class="o">=</span> <span class="s1">''</span>  <span class="c1"># To cancel it</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-18"></a>                                <span class="n">updated</span> <span class="o">=</span> <span class="bp">True</span> <span class="c1"># A change was made</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-19"></a>                        <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-20"></a>                                <span class="k">if</span> <span class="n">previous_entry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">''</span><span class="p">:</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-21"></a>                                        <span class="n">current_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">previous_entry</span><span class="p">)</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-22"></a>                                <span class="n">previous_entry</span> <span class="o">=</span> <span class="n">current_entry</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-23"></a>                                <span class="k">if</span> <span class="n">pos</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-24"></a>                                        <span class="c1"># At last element, so add it in</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-25"></a>                                        <span class="n">current_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_entry</span><span class="p">)</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-26"></a>                <span class="n">arr</span> <span class="o">=</span> <span class="n">current_result</span> <span class="c1"># we got new array</span>
+<a name="rest_code_96f3d24027ef4c97bb6c8da8d92301c6-27"></a>        <span class="k">return</span> <span class="n">arr</span>
+</pre>
+<p>Here's what went through my mind as I solved it - The first problem was to figure out a mechanism to detect adjacent entries which could be deleted. This meant that if I was looping over the original list and encountered something like <tt class="docutils literal">'NORTH'</tt> next to a <tt class="docutils literal">'SOUTH'</tt>, it was a match. A dictionary with key-value pairs mapping the different invalid entries seemed like a simple way to accomplish this goal. Which is how <tt class="docutils literal">reduce_direction</tt> came to be.</p>
+<p>The next question was how to handle the actual deletion, but do I really need to edit the original list? It might be easier (and possibly less destructive) to just make a new list. Then, instead of worrying about what elements to delete, I could just concern myself with the question of what elements to append to my new list! Which was how the for-loop came into being. Admittedly, it isn't as straight-forward as I would have liked.</p>
+<p>Here's how it works - as the loop runs over the list, it keeps a record of the previous entry in the loop, as well as the current entry. If the pair of previous + current, was valid the previous entry would be appended to the new list. It was possible that the current entry might make an invalid pair with the next entry in the list, so I deferred it's addition to the list until the next loop - where it would become the new previous entry. An exception to this is the case when we reach the last element of the list. This would have no next entry to compare against, so if I used <tt class="docutils literal">enumerate()</tt> and <tt class="docutils literal">len()</tt> in the for-loop to identify the last element and append it as a special case.</p>
+<p>This procedure would only work for a single iteration of the list. It is possible that, after removing a few invalid pairs, the new list might contain a new set of invalid pairs - which would need to be detected and removed. So, I put the entire thing in a <tt class="docutils literal">while</tt> loop which would keep running until no changes were made to the solution list.</p>
+<p>And the whole thing worked. This isn't what intuitively felt like an elegant solution, but at least it got the job done. Off the top of my head here were a few concerns I had,</p>
+<ul class="simple">
+<li>too many branches</li>
+<li>time complexity is horrific - the loop within a loop</li>
+<li>too many variables declared</li>
+</ul>
+<p>But how could the solution be imporved upon? I looked into other solutions to the same problem and found enlightenment! Let's go over a few high-lights.</p>
+<pre class="code python"><a name="rest_code_39f8e2ef423d4f7aa2eb1b03621c7d7d-1"></a><span class="k">if</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="ow">in</span> <span class="p">[[</span><span class="s2">"NORTH"</span><span class="p">,</span> <span class="s2">"SOUTH"</span><span class="p">],</span> <span class="p">[</span><span class="s2">"EAST"</span><span class="p">,</span> <span class="s2">"WEST"</span><span class="p">]]:</span>
+</pre>
+<p>The above snippet aesthetically solves the issue of duplicated data with my <tt class="docutils literal">reduce_direction</tt> dictionary. Instead of storing all four pairs, just club two of them together and use python's <tt class="docutils literal">sorted()</tt> function to match them up. As much as I like how this looks, I can't help but worry about it's time complexity. Sure, for just 2 elements, <tt class="docutils literal">sorted()</tt> shouldn't have issues, but the approach just doesn't feel like it would scale well. Still - worth nothing none-the-less.</p>
+<pre class="code python"><a name="rest_code_5739bf155a654f6ba32abec8f513bb78-1"></a><span class="k">def</span> <span class="nf">dirReduc</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+<a name="rest_code_5739bf155a654f6ba32abec8f513bb78-2"></a>        <span class="nb">dir</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<a name="rest_code_5739bf155a654f6ba32abec8f513bb78-3"></a>        <span class="n">dir2</span> <span class="o">=</span> <span class="nb">dir</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"NORTH SOUTH"</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"SOUTH NORTH"</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"EAST WEST"</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"WEST EAST"</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span>
+<a name="rest_code_5739bf155a654f6ba32abec8f513bb78-4"></a>        <span class="n">dir3</span> <span class="o">=</span> <span class="n">dir2</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<a name="rest_code_5739bf155a654f6ba32abec8f513bb78-5"></a>        <span class="k">return</span> <span class="n">dirReduc</span><span class="p">(</span><span class="n">dir3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dir3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">else</span> <span class="n">dir3</span>
+</pre>
+<p>Now, this is a nice bit of code. The author changes the problem from one of matching adjacent list entries to one of just matching strings. It simplifies a lot of the logic to a few <tt class="docutils literal">replace()</tt> operations. Once that's done, just split the entire thing back into a list and we have a solution! Keep re-iterating until no changes occour. I'm not sure about time complexity for the <tt class="docutils literal">replace()</tt> operations, but this seems to accomplish what I was trying to do in fewer lines of code. That is something to make a note of!!</p>
+<pre class="code python"><a name="rest_code_d5bd36452d494c618040fa738c9abbc3-1"></a><span class="n">opposite</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'NORTH'</span><span class="p">:</span> <span class="s1">'SOUTH'</span><span class="p">,</span> <span class="s1">'EAST'</span><span class="p">:</span> <span class="s1">'WEST'</span><span class="p">,</span> <span class="s1">'SOUTH'</span><span class="p">:</span> <span class="s1">'NORTH'</span><span class="p">,</span> <span class="s1">'WEST'</span><span class="p">:</span> <span class="s1">'EAST'</span><span class="p">}</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-2"></a>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-3"></a><span class="k">def</span> <span class="nf">dirReduc</span><span class="p">(</span><span class="n">plan</span><span class="p">):</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-4"></a>        <span class="n">new_plan</span> <span class="o">=</span> <span class="p">[]</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-5"></a>        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">plan</span><span class="p">:</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-6"></a>                <span class="k">if</span> <span class="n">new_plan</span> <span class="ow">and</span> <span class="n">new_plan</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">opposite</span><span class="p">[</span><span class="n">d</span><span class="p">]:</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-7"></a>                        <span class="n">new_plan</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-8"></a>                <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-9"></a>                        <span class="n">new_plan</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<a name="rest_code_d5bd36452d494c618040fa738c9abbc3-10"></a>        <span class="k">return</span> <span class="n">new_plan</span>
+</pre>
+<p>The top-voted entry however, is in a class of it's own. It actually manages to reduce the time-complexity of the solution to O(n) - something I wasn't sure was possible! The author makes use of a dictionary like I did, but exploits the in-built <tt class="docutils literal">pop()</tt> and <tt class="docutils literal">append()</tt> operations available for any python list. I had forgotten about <tt class="docutils literal">pop()</tt> in lists until I saw this solution. What's really nice is how the author makes use of the <tt class="docutils literal"><span class="pre">list[-1]</span></tt> notation to grab the last element of the solution-list to compare with the current iterated elment. Damn! I wish I'd remembered that.</p>
+<p>Compared to all this, my solution just looks needlessly complicated and embarrassing.</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="posts/2016/000-setting-up-an-isolated-development-environment.html" class="u-url">Setting up an isolated development environment</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Abraham_V
+            </span></p>
+            <p class="dateline"><a href="posts/2016/000-setting-up-an-isolated-development-environment.html" rel="bookmark"><time class="published dt-published" datetime="2016-08-29T20:06:00+05:30" title="2016-08-29 20:06">2016-08-29 20:06</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>I've lost count of how many times I've re-installed my operating system, just because of tool-bloat. For one project or the other, a tool or utility would be installed on my system, then another and before I knew it - either my computer would slow down or the different tools would have conflicts between themselves. Even if that didn't happen there were times when I would want to re-format my system, just to bring it to a 'fresh' state.</p>
+<p>This was a process that was proving to be very time-consuming - and often enough, risky as well. If I didn't have a spare internet connected device nearby, I might configure the installer to provide me with a brick! Surely, I could find a better use of my time than spending a significant portion of the month reinstalling my computer? Searching for a solution to this problem I came across,</p>
+<div class="section" id="virtualbox">
+<h2>VirtualBox</h2>
+<p>It seemed perfect for my needs - a relatively cheap way to bring up an experimental system, work with it and best of all - easy to destroy and recover from! I cannot describe how liberating it was to be able to create a virtual system for quick (and possibly destructive) experiment without worrying about damaging my host system!</p>
+<p>Granted, there were a few drawbacks - I lost out a bit on performace - some compiles took longer to complete than before, but for testing functionality - it did the job. One thing that it didn't quite solve for me, was the issue of configuration.</p>
+<p>Each and every time I needed to boot up a new virtual system, I would still have to spend a considerable effort just setting it up - root usernames, passwords, network settings, disk partitions . . . etc. And this doesn't quite cover the matter of sharing my work. Explaining to a collegue how to setup their own virtual enviroment meant writing a lot of documentation which was a pain to keep updated.</p>
+<p>Quite by accident I then discovered,</p>
+</div>
+<div class="section" id="vagrant">
+<h2>Vagrant</h2>
+<p>This is like a manager for virtual systems. It supports other virtulaization tools like vmware, but for my needs it acts as a wrapper around virtualbox. I like to think of it as a way to store my virtualbox settings in a textfile which I can add to the VCS. This makes it very easy to share with collegues and friends. Just send them the <tt class="docutils literal">Vagrantfile</tt> configuration and ask them to run a single command,</p>
+<pre class="code shell"><a name="rest_code_28bae2aaaf594d7f9a2627cdea82753a-1"></a>$ vagrant up
+</pre>
+<p>Because of the way vagrant works, it cannot use distribution ISO files directly. Instead, the project introduces something called Vagrant Boxes. These are a set of pre-build virutal images which can be used for testing.</p>
+<p>Recently, I encountered a very odd (and frustrating!) situation - Canonical or CentOS do not maintain updated versions of their operating systems in the vagrant-box archive. Sure, they publish the most recent builds to the archive, but after downloading, spending hours trying to fight against subtle bugs (eg: centos does not sync the <tt class="docutils literal">/vagrant</tt> folder between guest and host very well - data just goes <em>missing</em> after a reboot!), I had enough. And it looks like I'm not alone.</p>
+<p>Fortunately, there is an open source movement working to keep stable vagrant-boxes in the archive - <a class="reference external" href="http://chef.github.io/bento/">the bento project</a>. It's run by the folks behind Chef - a system provisioning tool (I perfer ansible).</p>
+<p>And this is what I use these days to setup an isolated environment,</p>
+<pre class="code shell"><a name="rest_code_fb5e7080d9264ca484408f5c467ed9b1-1"></a>$ vagrant init bento/centos-7.2
+<a name="rest_code_fb5e7080d9264ca484408f5c467ed9b1-2"></a>$ vagrant up
+</pre>
+<p>Change the init box to use whichever OS is needed.</p>
+</div>
+</div>
+    </div>
+    </article>
+</div>
+
+
+
+
+
+
+
+        </div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:no@email.here">Abraham_V</a> - Powered by<a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="assets/js/jquery.min.js"></script><script src="assets/js/bootstrap.min.js"></script><script src="assets/js/moment-with-locales.min.js"></script><script src="assets/js/fancydates.js"></script><script src="assets/js/jquery.colorbox-min.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
