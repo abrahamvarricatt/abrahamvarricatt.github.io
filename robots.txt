@@ -1,4 +1,0 @@
-Sitemap: https://note2self.abraham-v.com/sitemapindex.xml
-
-User-Agent: *
-Host: note2self.abraham-v.com
