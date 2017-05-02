@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ DEFAULT_LANG }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="{{ SITEURL }}/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="{{ SITEURL }}/theme/css/reset.css" />
+  <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css" />
+  <link rel="stylesheet" href="{{ SITEURL }}/theme/css/style.css" />
+  <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="{{ SITEURL }}/">{{ SITENAME }}</a></h1>
+        <h2>{{ SITESUBTITLE }}</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="{{ SITEURL }}/archives.html">ARCHIVES</a></p>
+        {% for p in pages %}
+          <p><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></p>
+        {% endfor %}
+      </nav>
+    </div>
+  </div>
+</body>
+</html>

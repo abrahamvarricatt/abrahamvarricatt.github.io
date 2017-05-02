@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <article>
+    <header>
+      <h1><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h1>
+      <h2>posted on<time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time></h2>
+    </header>
+    <section>{{ article.content }}</section>
+  </article>
+  <hr />
+
+  {% if article.prev_article or article.next_article %}
+    <div class="paginator">
+      {% if article.prev_article %}
+        <a class="previous" href="{{ SITEURL }}/{{ article.prev_article.url }}">&laquo; Older post</a>
+      {% endif %}
+
+      {% if article.next_article %}
+        <a class="next" href="{{ SITEURL }}/{{ article.next_article.url }}">Newer post &raquo;</a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+
+{% endblock %}

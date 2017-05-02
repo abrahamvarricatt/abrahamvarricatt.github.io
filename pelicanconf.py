@@ -4,9 +4,28 @@ from __future__ import unicode_literals
 
 AUTHOR = 'AbrahamV'
 SITENAME = 'Abraham Varricatt'
+SITESUBTITLE = 'Note To Self'
+DEFAULT_DATE_FORMAT = '%Y/%m&#8209;%b/%d'
 SITEURL = 'http://localhost:8000'
 
 PATH = 'content'
+PAGE_PATHS = ['pages']
+ARTICLE_PATHS = ['articles']
+STATIC_PATHS = [
+  'articles',
+  'static',
+]
+PLUGIN_PATHS = ['pelican-plugins']
+PLUGINS = [
+  'summary',
+  'neighbors',
+  'headerid',
+]
+
+# Articles in respective folders
+PATH_METADATA = r'(?P<path>.*)/(?P<slug>.*)\..*'
+ARTICLE_SAVE_AS = '{path}/{slug}.html'
+ARTICLE_URL = '{path}/{slug}.html'
 
 TIMEZONE = 'America/Toronto'
 
@@ -19,17 +38,14 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
-
-# Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
-
 DEFAULT_PAGINATION = 5
 
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+USE_FOLDER_AS_CATEGORY = False
+DISPLAY_CATEGORIES_ON_MENU = False
+TYPOGRIFY = True
+HEADERID_LINK_CHAR = ' #'
+
+# For pygments highlighting
+PYGMENTS_RST_OPTIONS = {
+  'linenos': 'table',
+}

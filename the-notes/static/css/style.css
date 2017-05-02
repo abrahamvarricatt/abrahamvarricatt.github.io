@@ -1,0 +1,319 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Show scrollbar always */
+html {
+  height: 101%;
+}
+
+/* Site color */
+body {
+  background-color: #ffffff;  /* White */
+  color: #000000; /* Black */
+}
+
+/* Center content */
+.page {
+  margin: 0 auto;
+}
+
+/* Anchor behavior */
+a {
+  text-decoration: none;
+  color: #536ade;  /* Light Blue */
+}
+
+a:hover {
+  font-weight: bold;
+  color: #536ade;
+}
+
+/* Site Title */
+.site-glance-top {
+  margin: 20px 0 0 5px;
+  height: 50px;
+}
+
+.site-glance-top > header > h1 {
+  font-family: serif;
+  font-weight: lighter;
+  font-size: 20px;
+}
+
+.site-glance-top > header > h2 {
+  font-family: serif;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 100;
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+/* Site Navlinks */
+.site-glance-bottom  p {
+  text-align: left;
+  margin: 5px;
+  padding : 10px 0;
+  font-size: 15px;
+}
+
+/* Article Headings */
+article > header > h1 {
+  font-family: serif;
+  font-weight: lighter;
+  font-size: 30px;
+  margin-top: 20px;
+}
+
+article > header > h2 {
+  font-family: serif;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: 100;
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+article > header > h2 > time {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+article > section {
+  margin-top: 15px;
+  font-family: sans-serif;
+  text-align: justify;
+  line-height: 125%;
+  font-size: 14px;
+  font-weight: lighter;
+}
+
+/* Old/New entry links at bottom */
+.paginator {
+  margin: 20px 0;
+  font-family: sans-serif;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+
+.paginator > .previous {
+  float: left;
+  font-variant: small-caps;
+}
+
+.paginator > .next {
+  float: right;
+  font-variant: small-caps;
+}
+
+/* Topic Headings & Styles */
+section p {
+  margin-top: 10px;
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+section h2 {
+  margin-top: 20px;
+  font-family: serif;
+  font-weight: lighter;
+  font-size: 30px;
+}
+
+section h3 {
+  margin-top: 20px;
+  font-family: serif;
+  font-weight: lighter;
+  font-size: 25px;
+}
+
+section h4 {
+  margin-top: 20px;
+  font-family: serif;
+  font-weight: lighter;
+  font-size: 20px;
+}
+
+section h5,
+section h6 {
+  margin-top: 20px;
+  font-family: serif;
+  font-weight: lighter;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Blockquotes */
+section blockquote {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 0 40px;
+  font-style: italic;
+  font-family: monospace;
+}
+
+section blockquote > ul {
+  list-style: disc;
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+section blockquote > ol {
+  list-style: decimal;
+  font-weight: normal;
+  font-family: sans-serif;
+}
+
+/* Table */
+section table {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+section table th,
+section table td {
+  padding: 10px;
+  border-bottom: 1px solid #000000;
+  font-family: monospace;
+  text-align: justify;
+}
+
+section table tr:hover {
+  background-color: #f5f5f5;
+}
+
+section table th {
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* Footnotes */
+.footnote {
+  /* ref: http://stackoverflow.com/a/6447072 */
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.footnote ~ .footnote {
+  margin-top: 0px;
+}
+
+section table.footnote {
+  width: auto;
+}
+
+section table.footnote th,
+section table.footnote td {
+  padding: 0;
+  margin: 0;
+  border-bottom: none;
+  font-size: 12px;
+  font-family: sans-serif;
+  font-style: italic;
+}
+
+/* Figures (NOT images) */
+div.figure > img {
+  margin-top: 10px;
+  width: 100%;
+}
+
+div.figure > p.caption {
+  margin-top: 0;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Code Highlighting (in addition to pygments stuff) */
+.highlight {
+  font-family: monospace;
+  font-size: 12px;
+  overflow: visible;
+}
+
+table.highlighttable td,
+table.highlighttable tr:hover {
+  border-bottom: none;
+  background-color: inherit;
+}
+
+/* Phone views */
+@media only screen and (max-width: 899px) {
+  /* Page Width */
+  .page {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  /* Left sidebar */
+  .site-glance {
+    padding-right: 5px;
+  }
+
+  /* Site Title */
+  .site-glance-top {
+    position: static;
+  }
+
+  /* Content Area */
+  .page .articles {
+    width: 100%;
+    padding: 5px;
+  }
+
+  /* Code snippets */
+  table.highlighttable {
+    width: 100%;
+    display: block;
+    overflow: scroll;
+  }
+
+  .highlight {
+    font-family: monospace;
+    font-size: 10px;
+  }
+
+  td.linenos {
+    display: none;
+  }
+
+}
+
+/* Tablet, Desktop views */
+@media only screen and (min-width: 900px) {
+  /* Page Width */
+  .page {
+    width: 900px;
+  }
+
+  /* Left sidebar */
+  .site-glance {
+    width: 190px;
+    padding-right: 10px;
+  }
+
+  /* Site Title */
+  .site-glance-top {
+    position: fixed;
+    float: left;
+    top: 0;
+  }
+
+  /* Site Navlinks */
+  .site-glance-bottom {
+    position: fixed;
+    float: left;
+    top: 80px;
+  }
+
+  /* Content Area */
+  .page .articles {
+    float: right;
+    width: 700px;
+    margin-right: 5px;
+  }
+
+}

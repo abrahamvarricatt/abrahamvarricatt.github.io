@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <article>
+    <header>
+      <h1><a href="{{ SITEURL }}/archives.html">ARCHIVES</a></h1>
+    </header>
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align:center;">Date</th>
+            <th style="text-align:left;">Title</th>
+          </tr>
+        </thead>
+        {% for article in dates %}
+          <tr>
+            <td style="text-align:center;font-family:monospace;border-bottom:none;">{{ article.locale_date }}</td>
+            <td style="text-align:left;border-bottom:none;"><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></td>
+          </tr>
+        {% endfor %}
+      </table>
+    </section>
+  </article>
+  <hr />
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% for article in articles_page.object_list %}
+  <article>
+    <header>
+      <h1><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h1>
+      <h2>posted on<time datetime="{{ article.date.isoformat() }}"> {{ article.locale_date }}</time></h2>
+    </header>
+    <section>{{ article.summary }}</section>
+  </article>
+  <hr />
+  {% endfor %}
+  {% if articles_page.has_other_pages() %}
+    <div class="paginator">
+      {% if articles_page.has_next() %}
+        <a class="previous" href="{{ SITEURL }}/{{ articles_next_page.url }}">&laquo; Older entries</a>
+      {% endif %}
+
+      {# <p class="page-count">Page {{ articles_page.number }} / {{ articles_paginator.num_pages }}</p> #}
+
+      {% if articles_page.has_previous() %}
+        <a class="next" href="{{ SITEURL }}/{{ articles_previous_page.url }}">Newer entries &raquo;</a>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock %}
