@@ -8,6 +8,8 @@ SITESUBTITLE = 'Note To Self'
 DEFAULT_DATE_FORMAT = '%Y/%m&#8209;%b/%d'
 SITEURL = 'http://localhost:8000'
 
+THEME = 'the-notes'
+
 PATH = 'content'
 PAGE_PATHS = ['pages']
 ARTICLE_PATHS = ['articles']
