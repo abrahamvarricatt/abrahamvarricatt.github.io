@@ -99,10 +99,10 @@ into it from another system on the wifi network!
 Assuming that you don't run into any hardware trouble (like corrupted microSD
 cards!), you can use the default credentials to login to your Pi -
 
-========  =========
-Username  pi
-Password  raspberry
-========  =========
+.. code-block:: text
+
+   Username : pi
+   Password : raspberry
 
 Remember to give the Pi enough time to boot before you attempt to SSH into it.
 About 1 - 3 minutes works for me with a Class 10 microSD card. For convenience,

@@ -54,5 +54,5 @@ HEADERID_LINK_CHAR = ' #'
 
 # For pygments highlighting
 PYGMENTS_RST_OPTIONS = {
-  'linenos': 'table',
+  # 'linenos': 'table',
 }
