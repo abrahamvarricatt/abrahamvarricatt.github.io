@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2017/001-raspberry-pi-3-headless-wifi.html">Raspberry Pi 3 for headless&nbsp;wifi</a></h1>
+      <h2>posted on<time datetime="2017-05-13T00:00:00-04:00"> 2017/05&#8209;May/13</time></h2>
+    </header>
+    <section><p>After following these instructions you will have a bootable microSD card which
+can be inserted into a Raspberry Pi 3 to load up the Raspbian Lite image,
+configured to auto-connect to your wifi network, with a server you can <span class="caps">SSH</span> into.
+For good measure, we will also enable the <span class="caps">UART</span> serial&nbsp;console.</p>
+<p>All the work is being done on a traditional x86-based Linux laptop - the Pi
+won&#8217;t be needed until you actually want to boot the&nbsp;image!</p>
+
+<div class="section" id="downloads">
+<h2>01. Downloads<a class="headerlink" href="#downloads" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>There are 2 files we&#8217;ll need to download. The first and most obvious is the
+official Raspbian Lite image available&nbsp;here,</p>
+<p><a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/">https://www.raspberrypi.org/downloads/raspbian/</a></p>
+<p>I&#8217;ve tested against the April 2017 version. The second is Etcher; a
+cross-platform tool to flash images. You can get it&nbsp;from,</p>
+<p><a class="reference external" href="https://etcher.io/">https://etcher.io/</a></p>
+</div>
+<div class="section" id="flashing-the-image">
+<h2>02. Flashing the image<a class="headerlink" href="#flashing-the-image" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Etcher makes the process of flashing Raspbian images ridiculously easy! Open the
+application, select our Raspbian Lite image, target memory device is
+auto-selected and finally click the &#8216;Flash!&#8217; button. In about 5 minutes the
+flashed memory device will be verified and ready to be ejected from the&nbsp;computer!</p>
+</div>
+<div class="section" id="activating-the-ssh-server">
+<h2>03. Activating the <span class="caps">SSH</span> server<a class="headerlink" href="#activating-the-ssh-server" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Re-insert the memory device. It will show up with two partitions - a <span class="caps">FAT</span> boot
+partition and another ext4 partition. Let&#8217;s refer to the latter as the system&nbsp;partition.</p>
+<p>You want to navigate into the boot partition and within the <tt class="docutils literal">/boot</tt> directory,
+create a file called <tt class="docutils literal">ssh</tt>. The contents don&#8217;t matter - only the existence of
+the file is checked to enable the <span class="caps">SSH</span>&nbsp;server.</p>
+<p>Pay attention to the owners and permissions within the <tt class="docutils literal">/boot</tt> directory.</p>
+</div>
+<div class="section" id="enable-the-serial-uart-console">
+<h2>04. Enable the serial <span class="caps">UART</span> console<a class="headerlink" href="#enable-the-serial-uart-console" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Within the same <tt class="docutils literal">/boot</tt> folder is a file called <tt class="docutils literal">config.txt</tt>. You need to
+edit this text file and append the&nbsp;following,</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>enable_uart=1
+</pre></div>
+</td></tr></table><p>That&#8217;s all it takes to enable the <span class="caps">UART</span> console. Bear in mind that using
+Bluetooth after this might come with a few&nbsp;hiccups.</p>
+<p>As usual, pay attention to the owners and permissions within the&nbsp;folder.</p>
+</div>
+<div class="section" id="configuring-wifi">
+<h2>05. Configuring Wifi<a class="headerlink" href="#configuring-wifi" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Now you need to move into the system partition. Navigate to the folder called
+<tt class="docutils literal">/etc/wpa_supplicant</tt>. You&#8217;ll need to append the following to the file named
+<tt class="docutils literal">wpa_supplicant.conf</tt>,</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span>network={
+    ssid=&quot;YOUR_WIFI_SSID&quot;
+    psk=&quot;YOUR_WIFI_PASSWORD&quot;
+}
+</pre></div>
+</td></tr></table><p>The quotes are important. These should be enough if the wifi ssid is being
+broadcast and <span class="caps">WPA2</span> Personal security settings are used. If that&#8217;s not the case,
+you&#8217;ll want to refer to these instructions&nbsp;instead,</p>
+<p><a class="reference external" href="https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md">https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md</a></p>
+<p>Pay special attention to the file permissions and ownership settings here. I
+think I needed to use <tt class="docutils literal">sudo</tt> to make the&nbsp;edits.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>We&#8217;re done. You can now eject the microSD card from your computer, insert it
+into the Raspberry Pi 3 board, power it on, wait for booting to finish and ssh
+into it from another system on the wifi&nbsp;network!</p>
+<p>Assuming that you don&#8217;t run into any hardware trouble (like corrupted microSD
+cards!), you can use the default credentials to login to your Pi&nbsp;-</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Username</td>
+<td>pi</td>
+</tr>
+<tr><td>Password</td>
+<td>raspberry</td>
+</tr>
+</tbody>
+</table>
+<p>Remember to give the Pi enough time to boot before you attempt to <span class="caps">SSH</span> into it.
+About 1 - 3 minutes works for me with a Class 10 microSD card. For convenience,
+you might want to configure the <span class="caps">DHCP</span> server on your network to allocate a
+static <span class="caps">IP</span> address to the Pi 3&nbsp;board.</p>
+</div>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2017/0000-hello-world.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>

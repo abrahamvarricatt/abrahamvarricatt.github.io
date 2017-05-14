@@ -1,5 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-05-01T00:00:00-04:00</updated><entry><title>Hello World</title><link href="https://blog.abraham-v.com/articles/2017/0000-hello-world.html" rel="alternate"></link><published>2017-05-01T00:00:00-04:00</published><updated>2017-05-01T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-01:/articles/2017/0000-hello-world.html</id><summary type="html">&lt;p&gt;And for the nth time, I&amp;#8217;m starting a new blog. It&amp;#8217;s a bit sad that I keep
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-05-13T00:00:00-04:00</updated><entry><title>Raspberry Pi 3 for headless wifi</title><link href="https://blog.abraham-v.com/articles/2017/001-raspberry-pi-3-headless-wifi.html" rel="alternate"></link><published>2017-05-13T00:00:00-04:00</published><updated>2017-05-13T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-13:/articles/2017/001-raspberry-pi-3-headless-wifi.html</id><summary type="html">&lt;p&gt;After following these instructions you will have a bootable microSD card which
+can be inserted into a Raspberry Pi 3 to load up the Raspbian Lite image,
+configured to auto-connect to your wifi network, with a server you can &lt;span class="caps"&gt;SSH&lt;/span&gt; into.
+For good measure, we will also enable the &lt;span class="caps"&gt;UART&lt;/span&gt; serial&amp;nbsp;console.&lt;/p&gt;
+&lt;p&gt;All the work is being done on a traditional x86-based Linux laptop - the Pi
+won&amp;#8217;t be needed until you actually want to boot the&amp;nbsp;image!&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;After following these instructions you will have a bootable microSD card which
+can be inserted into a Raspberry Pi 3 to load up the Raspbian Lite image,
+configured to auto-connect to your wifi network, with a server you can &lt;span class="caps"&gt;SSH&lt;/span&gt; into.
+For good measure, we will also enable the &lt;span class="caps"&gt;UART&lt;/span&gt; serial&amp;nbsp;console.&lt;/p&gt;
+&lt;p&gt;All the work is being done on a traditional x86-based Linux laptop - the Pi
+won&amp;#8217;t be needed until you actually want to boot the&amp;nbsp;image!&lt;/p&gt;
+
+&lt;div class="section" id="downloads"&gt;
+&lt;h2&gt;01. Downloads&lt;a class="headerlink" href="#downloads" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;There are 2 files we&amp;#8217;ll need to download. The first and most obvious is the
+official Raspbian Lite image available&amp;nbsp;here,&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://www.raspberrypi.org/downloads/raspbian/"&gt;https://www.raspberrypi.org/downloads/raspbian/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve tested against the April 2017 version. The second is Etcher; a
+cross-platform tool to flash images. You can get it&amp;nbsp;from,&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://etcher.io/"&gt;https://etcher.io/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="flashing-the-image"&gt;
+&lt;h2&gt;02. Flashing the image&lt;a class="headerlink" href="#flashing-the-image" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Etcher makes the process of flashing Raspbian images ridiculously easy! Open the
+application, select our Raspbian Lite image, target memory device is
+auto-selected and finally click the &amp;#8216;Flash!&amp;#8217; button. In about 5 minutes the
+flashed memory device will be verified and ready to be ejected from the&amp;nbsp;computer!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="activating-the-ssh-server"&gt;
+&lt;h2&gt;03. Activating the &lt;span class="caps"&gt;SSH&lt;/span&gt; server&lt;a class="headerlink" href="#activating-the-ssh-server" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Re-insert the memory device. It will show up with two partitions - a &lt;span class="caps"&gt;FAT&lt;/span&gt; boot
+partition and another ext4 partition. Let&amp;#8217;s refer to the latter as the system&amp;nbsp;partition.&lt;/p&gt;
+&lt;p&gt;You want to navigate into the boot partition and within the &lt;tt class="docutils literal"&gt;/boot&lt;/tt&gt; directory,
+create a file called &lt;tt class="docutils literal"&gt;ssh&lt;/tt&gt;. The contents don&amp;#8217;t matter - only the existence of
+the file is checked to enable the &lt;span class="caps"&gt;SSH&lt;/span&gt;&amp;nbsp;server.&lt;/p&gt;
+&lt;p&gt;Pay attention to the owners and permissions within the &lt;tt class="docutils literal"&gt;/boot&lt;/tt&gt; directory.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="enable-the-serial-uart-console"&gt;
+&lt;h2&gt;04. Enable the serial &lt;span class="caps"&gt;UART&lt;/span&gt; console&lt;a class="headerlink" href="#enable-the-serial-uart-console" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Within the same &lt;tt class="docutils literal"&gt;/boot&lt;/tt&gt; folder is a file called &lt;tt class="docutils literal"&gt;config.txt&lt;/tt&gt;. You need to
+edit this text file and append the&amp;nbsp;following,&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;enable_uart=1
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;That&amp;#8217;s all it takes to enable the &lt;span class="caps"&gt;UART&lt;/span&gt; console. Bear in mind that using
+Bluetooth after this might come with a few&amp;nbsp;hiccups.&lt;/p&gt;
+&lt;p&gt;As usual, pay attention to the owners and permissions within the&amp;nbsp;folder.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-wifi"&gt;
+&lt;h2&gt;05. Configuring Wifi&lt;a class="headerlink" href="#configuring-wifi" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Now you need to move into the system partition. Navigate to the folder called
+&lt;tt class="docutils literal"&gt;/etc/wpa_supplicant&lt;/tt&gt;. You&amp;#8217;ll need to append the following to the file named
+&lt;tt class="docutils literal"&gt;wpa_supplicant.conf&lt;/tt&gt;,&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;network={
+    ssid=&amp;quot;YOUR_WIFI_SSID&amp;quot;
+    psk=&amp;quot;YOUR_WIFI_PASSWORD&amp;quot;
+}
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;The quotes are important. These should be enough if the wifi ssid is being
+broadcast and &lt;span class="caps"&gt;WPA2&lt;/span&gt; Personal security settings are used. If that&amp;#8217;s not the case,
+you&amp;#8217;ll want to refer to these instructions&amp;nbsp;instead,&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md"&gt;https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Pay special attention to the file permissions and ownership settings here. I
+think I needed to use &lt;tt class="docutils literal"&gt;sudo&lt;/tt&gt; to make the&amp;nbsp;edits.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;a class="headerlink" href="#conclusion" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;We&amp;#8217;re done. You can now eject the microSD card from your computer, insert it
+into the Raspberry Pi 3 board, power it on, wait for booting to finish and ssh
+into it from another system on the wifi&amp;nbsp;network!&lt;/p&gt;
+&lt;p&gt;Assuming that you don&amp;#8217;t run into any hardware trouble (like corrupted microSD
+cards!), you can use the default credentials to login to your Pi&amp;nbsp;-&lt;/p&gt;
+&lt;table border="1" class="docutils"&gt;
+&lt;colgroup&gt;
+&lt;col width="47%" /&gt;
+&lt;col width="53%" /&gt;
+&lt;/colgroup&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td&gt;Username&lt;/td&gt;
+&lt;td&gt;pi&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Password&lt;/td&gt;
+&lt;td&gt;raspberry&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Remember to give the Pi enough time to boot before you attempt to &lt;span class="caps"&gt;SSH&lt;/span&gt; into it.
+About 1 - 3 minutes works for me with a Class 10 microSD card. For convenience,
+you might want to configure the &lt;span class="caps"&gt;DHCP&lt;/span&gt; server on your network to allocate a
+static &lt;span class="caps"&gt;IP&lt;/span&gt; address to the Pi 3&amp;nbsp;board.&lt;/p&gt;
+&lt;/div&gt;
+</content></entry><entry><title>Hello World</title><link href="https://blog.abraham-v.com/articles/2017/0000-hello-world.html" rel="alternate"></link><published>2017-05-01T00:00:00-04:00</published><updated>2017-05-01T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-01:/articles/2017/0000-hello-world.html</id><summary type="html">&lt;p&gt;And for the nth time, I&amp;#8217;m starting a new blog. It&amp;#8217;s a bit sad that I keep
 making these and changing them, but perhaps that&amp;#8217;s the nature of&amp;nbsp;things?&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;And for the nth time, I&amp;#8217;m starting a new blog. It&amp;#8217;s a bit sad that I keep
 making these and changing them, but perhaps that&amp;#8217;s the nature of&amp;nbsp;things?&lt;/p&gt;
