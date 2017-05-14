@@ -29,6 +29,11 @@ PATH_METADATA = r'(?P<path>.*)/(?P<slug>.*)\..*'
 ARTICLE_SAVE_AS = '{path}/{slug}.html'
 ARTICLE_URL = '{path}/{slug}.html'
 
+# Special files
+EXTRA_PATH_METADATA = {
+  'static/CNAME': {'path': 'CNAME'},
+}
+
 TIMEZONE = 'America/Toronto'
 
 DEFAULT_LANG = 'en'
