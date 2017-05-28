@@ -1,5 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/all.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-05-13T00:00:00-04:00</updated><entry><title>Raspberry Pi 3 for headless wifi</title><link href="https://blog.abraham-v.com/articles/2017/001-raspberry-pi-3-headless-wifi.html" rel="alternate"></link><published>2017-05-13T00:00:00-04:00</published><updated>2017-05-13T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-13:/articles/2017/001-raspberry-pi-3-headless-wifi.html</id><summary type="html">&lt;p&gt;After following these instructions you will have a bootable microSD card which
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/all.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-05-28T00:00:00-04:00</updated><entry><title>NAS on Raspberry Pi with USB backup</title><link href="https://blog.abraham-v.com/articles/2017/002-nas-on-raspberry-pi-with-usb.html" rel="alternate"></link><published>2017-05-28T00:00:00-04:00</published><updated>2017-05-28T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-28:/articles/2017/002-nas-on-raspberry-pi-with-usb.html</id><summary type="html">&lt;p&gt;This post details the steps I took to configure a Network Accessable Storage
+(&lt;span class="caps"&gt;NAS&lt;/span&gt;) using the Samba protocol on a Raspberry Pi 3 running the Raspbian Jessie
+Lite distribution. This was done using the openmediavault (&lt;span class="caps"&gt;OMV&lt;/span&gt;)&amp;nbsp;project.&lt;/p&gt;
+&lt;p&gt;For redundancy purposes, a &lt;span class="caps"&gt;USB&lt;/span&gt; memory stick was configured as a backup location
+for the shared&amp;nbsp;folder.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;This post details the steps I took to configure a Network Accessable Storage
+(&lt;span class="caps"&gt;NAS&lt;/span&gt;) using the Samba protocol on a Raspberry Pi 3 running the Raspbian Jessie
+Lite distribution. This was done using the openmediavault (&lt;span class="caps"&gt;OMV&lt;/span&gt;)&amp;nbsp;project.&lt;/p&gt;
+&lt;p&gt;For redundancy purposes, a &lt;span class="caps"&gt;USB&lt;/span&gt; memory stick was configured as a backup location
+for the shared&amp;nbsp;folder.&lt;/p&gt;
+
+&lt;div class="section" id="a-new-admin-user"&gt;
+&lt;h2&gt;01. A new admin user&lt;a class="headerlink" href="#a-new-admin-user" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;After logging in with the default &lt;tt class="docutils literal"&gt;pi&lt;/tt&gt; root user, you can create a new root
+account with the following&amp;nbsp;commands,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo adduser admin
+$ sudo usermod -aG sudo admin
+$ su - admin  &lt;span class="c1"&gt;# Login as admin to verify things worked&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;At this point, you can create a new &lt;span class="caps"&gt;SSH&lt;/span&gt; connection into the Rpi using the new
+&lt;tt class="docutils literal"&gt;admin&lt;/tt&gt; user and delete the default&amp;nbsp;account,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo deluser --remove-home pi
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-timezone"&gt;
+&lt;h2&gt;02. Configuring Timezone&lt;a class="headerlink" href="#configuring-timezone" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The Rpi assumes &lt;span class="caps"&gt;UK&lt;/span&gt; as it&amp;#8217;s default timezone. This isn&amp;#8217;t something I usually care
+for in experimental projects, but for a &lt;span class="caps"&gt;NAS&lt;/span&gt; where backups are a concern it is
+probably best to use the local timezone. There is a linux utility which helps
+set this up. You can begin the process with the following&amp;nbsp;command,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo dpkg-reconfigure tzdata
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-openmediavault"&gt;
+&lt;h2&gt;03. Installing openmediavault&lt;a class="headerlink" href="#installing-openmediavault" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The openmediavault project maintains an official debian repository with support
+for the &lt;span class="caps"&gt;ARM&lt;/span&gt; architecture. You can add this as a source and install &lt;span class="caps"&gt;OMV&lt;/span&gt; using
+the following&amp;nbsp;commands,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /etc/apt/sources.list.d/
+$ sudo touch openmediavault.list
+$ sudo &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;deb http://packages.openmediavault.org/public erasmus main&amp;quot;&lt;/span&gt; &amp;gt; openmediavault.list
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; ~
+$ sudo apt-get update
+$ sudo apt-get install openmediavault-keyring postfix resolvconf
+$ sudo apt-get update
+$ sudo apt-get install openmediavault
+$ sudo omv-initsystem
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Bear in mind that some of these steps, &lt;span class="caps"&gt;ESPECIALLY&lt;/span&gt; the installation ones take
+time to run - anywhere between 5 to 30 minutes. I think this is more to do
+with the hardware limitations of the Rpi than network availability. And speaking
+of the installation steps, the &lt;tt class="docutils literal"&gt;openmediavault&lt;/tt&gt; one asks you a few questions
+about mail service, mdadm and ProFTPD&amp;nbsp;settings.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ext4-formatting"&gt;
+&lt;h2&gt;04. &lt;span class="caps"&gt;EXT4&lt;/span&gt; formatting&lt;a class="headerlink" href="#ext4-formatting" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;You can insert a &lt;span class="caps"&gt;USB&lt;/span&gt; memory stick to act as the primary location for our network
+share. After that, using a web-browser on another system, you can login to the
+administrative interface of openmediavault using the &lt;tt class="docutils literal"&gt;admin&lt;/tt&gt; username and
+password created earlier. The &lt;span class="caps"&gt;URL&lt;/span&gt; to use is the &lt;span class="caps"&gt;IP&lt;/span&gt; address assigned to the Rpi&amp;nbsp;system.&lt;/p&gt;
+&lt;p&gt;Once logged in navigate to &lt;tt class="docutils literal"&gt;Storage &amp;gt; Physical Disks&lt;/tt&gt;, select the &lt;span class="caps"&gt;USB&lt;/span&gt; device
+to use as primary share and &lt;tt class="docutils literal"&gt;Wipe&lt;/tt&gt; it. This will clear out any data on&amp;nbsp;it.&lt;/p&gt;
+&lt;p&gt;Next navigate to &lt;tt class="docutils literal"&gt;Storage &amp;gt; File systems&lt;/tt&gt;, click the &lt;tt class="docutils literal"&gt;Create&lt;/tt&gt; button and
+format the primary &lt;span class="caps"&gt;USB&lt;/span&gt; memory device in &lt;span class="caps"&gt;EXT4&lt;/span&gt;. You can &lt;tt class="docutils literal"&gt;Mount&lt;/tt&gt; the drive using
+the web interface after&amp;nbsp;that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="user-account-for-sharing"&gt;
+&lt;h2&gt;05. User account for sharing&lt;a class="headerlink" href="#user-account-for-sharing" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Navigate to &lt;tt class="docutils literal"&gt;Access Rights Management &amp;gt; User&lt;/tt&gt; menu and create a new user
+account. We&amp;#8217;ll use this as the account to login to the &lt;span class="caps"&gt;NAS&lt;/span&gt; with from client&amp;nbsp;devices.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-a-smb-share-folder"&gt;
+&lt;h2&gt;06. Configuring a &lt;span class="caps"&gt;SMB&lt;/span&gt; share folder&lt;a class="headerlink" href="#configuring-a-smb-share-folder" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Navigate to &lt;tt class="docutils literal"&gt;Services &amp;gt; &lt;span class="caps"&gt;SMB&lt;/span&gt;/&lt;span class="caps"&gt;CIFS&lt;/span&gt;&lt;/tt&gt;. Select the &lt;tt class="docutils literal"&gt;Shares&lt;/tt&gt; tab and add a new
+shared folder. You might need to create one on our primary &lt;span class="caps"&gt;USB&lt;/span&gt; memory device.
+Set the permissions as appropiate, return to the &lt;tt class="docutils literal"&gt;Settings&lt;/tt&gt; tab and &lt;tt class="docutils literal"&gt;Enable&lt;/tt&gt;
+the &lt;span class="caps"&gt;SMB&lt;/span&gt;&amp;nbsp;share.&lt;/p&gt;
+&lt;p&gt;At this point, you should be able to use another system on same network to
+connect to the network share (&lt;span class="caps"&gt;IP&lt;/span&gt; address of the Rpi) using the user account we
+created in the earlier step. While it might be possible to use the &lt;tt class="docutils literal"&gt;admin&lt;/tt&gt;
+account, I think it&amp;#8217;s bad practise to share a root-level account like&amp;nbsp;that.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="usb-backup"&gt;
+&lt;h2&gt;07. &lt;span class="caps"&gt;USB&lt;/span&gt; backup&lt;a class="headerlink" href="#usb-backup" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;span class="caps"&gt;OMV&lt;/span&gt; doesn&amp;#8217;t come with &lt;span class="caps"&gt;USB&lt;/span&gt; backup as part of it&amp;#8217;s default configuration. You need
+to add it in as a plugin. Navigate to &lt;tt class="docutils literal"&gt;System &amp;gt; Plugins&lt;/tt&gt; and you should find
+it listed under &lt;tt class="docutils literal"&gt;Section:Backup&lt;/tt&gt;. Install it and you&amp;#8217;ll find a new option
+&lt;tt class="docutils literal"&gt;Services &amp;gt; &lt;span class="caps"&gt;USB&lt;/span&gt; Backup&lt;/tt&gt;. You can create new backup jobs which will trigger
+the first time they are created and whenever the &lt;span class="caps"&gt;USB&lt;/span&gt; drive is inserted into
+the board. I select the &lt;tt class="docutils literal"&gt;From shared folder to external storage&lt;/tt&gt; mode for
+these jobs. It might be first required to insert the backup drives and reformat
+them to &lt;span class="caps"&gt;EXT4&lt;/span&gt; before making the&amp;nbsp;jobs.&lt;/p&gt;
+&lt;/div&gt;
+</content></entry><entry><title>Raspberry Pi 3 for headless wifi</title><link href="https://blog.abraham-v.com/articles/2017/001-raspberry-pi-3-headless-wifi.html" rel="alternate"></link><published>2017-05-13T00:00:00-04:00</published><updated>2017-05-13T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-13:/articles/2017/001-raspberry-pi-3-headless-wifi.html</id><summary type="html">&lt;p&gt;After following these instructions you will have a bootable microSD card which
 can be inserted into a Raspberry Pi 3 to load up the Raspbian Lite image,
 configured to auto-connect to your wifi network, with a server you can &lt;span class="caps"&gt;SSH&lt;/span&gt; into.
 For good measure, we will also enable the &lt;span class="caps"&gt;UART&lt;/span&gt; serial&amp;nbsp;console.&lt;/p&gt;

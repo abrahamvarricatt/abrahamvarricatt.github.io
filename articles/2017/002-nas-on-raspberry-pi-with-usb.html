@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2017/002-nas-on-raspberry-pi-with-usb.html"><span class="caps">NAS</span> on Raspberry Pi with <span class="caps">USB</span>&nbsp;backup</a></h1>
+      <h2>posted on<time datetime="2017-05-28T00:00:00-04:00"> 2017/05&#8209;May/28</time></h2>
+    </header>
+    <section><p>This post details the steps I took to configure a Network Accessable Storage
+(<span class="caps">NAS</span>) using the Samba protocol on a Raspberry Pi 3 running the Raspbian Jessie
+Lite distribution. This was done using the openmediavault (<span class="caps">OMV</span>)&nbsp;project.</p>
+<p>For redundancy purposes, a <span class="caps">USB</span> memory stick was configured as a backup location
+for the shared&nbsp;folder.</p>
+
+<div class="section" id="a-new-admin-user">
+<h2>01. A new admin user<a class="headerlink" href="#a-new-admin-user" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>After logging in with the default <tt class="docutils literal">pi</tt> root user, you can create a new root
+account with the following&nbsp;commands,</p>
+<div class="highlight"><pre><span></span>$ sudo adduser admin
+$ sudo usermod -aG sudo admin
+$ su - admin  <span class="c1"># Login as admin to verify things worked</span>
+</pre></div>
+<p>At this point, you can create a new <span class="caps">SSH</span> connection into the Rpi using the new
+<tt class="docutils literal">admin</tt> user and delete the default&nbsp;account,</p>
+<div class="highlight"><pre><span></span>$ sudo deluser --remove-home pi
+</pre></div>
+</div>
+<div class="section" id="configuring-timezone">
+<h2>02. Configuring Timezone<a class="headerlink" href="#configuring-timezone" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>The Rpi assumes <span class="caps">UK</span> as it&#8217;s default timezone. This isn&#8217;t something I usually care
+for in experimental projects, but for a <span class="caps">NAS</span> where backups are a concern it is
+probably best to use the local timezone. There is a linux utility which helps
+set this up. You can begin the process with the following&nbsp;command,</p>
+<div class="highlight"><pre><span></span>$ sudo dpkg-reconfigure tzdata
+</pre></div>
+</div>
+<div class="section" id="installing-openmediavault">
+<h2>03. Installing openmediavault<a class="headerlink" href="#installing-openmediavault" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>The openmediavault project maintains an official debian repository with support
+for the <span class="caps">ARM</span> architecture. You can add this as a source and install <span class="caps">OMV</span> using
+the following&nbsp;commands,</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /etc/apt/sources.list.d/
+$ sudo touch openmediavault.list
+$ sudo <span class="nb">echo</span> <span class="s2">&quot;deb http://packages.openmediavault.org/public erasmus main&quot;</span> &gt; openmediavault.list
+$ <span class="nb">cd</span> ~
+$ sudo apt-get update
+$ sudo apt-get install openmediavault-keyring postfix resolvconf
+$ sudo apt-get update
+$ sudo apt-get install openmediavault
+$ sudo omv-initsystem
+</pre></div>
+<p>Bear in mind that some of these steps, <span class="caps">ESPECIALLY</span> the installation ones take
+time to run - anywhere between 5 to 30 minutes. I think this is more to do
+with the hardware limitations of the Rpi than network availability. And speaking
+of the installation steps, the <tt class="docutils literal">openmediavault</tt> one asks you a few questions
+about mail service, mdadm and ProFTPD&nbsp;settings.</p>
+</div>
+<div class="section" id="ext4-formatting">
+<h2>04. <span class="caps">EXT4</span> formatting<a class="headerlink" href="#ext4-formatting" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>You can insert a <span class="caps">USB</span> memory stick to act as the primary location for our network
+share. After that, using a web-browser on another system, you can login to the
+administrative interface of openmediavault using the <tt class="docutils literal">admin</tt> username and
+password created earlier. The <span class="caps">URL</span> to use is the <span class="caps">IP</span> address assigned to the Rpi&nbsp;system.</p>
+<p>Once logged in navigate to <tt class="docutils literal">Storage &gt; Physical Disks</tt>, select the <span class="caps">USB</span> device
+to use as primary share and <tt class="docutils literal">Wipe</tt> it. This will clear out any data on&nbsp;it.</p>
+<p>Next navigate to <tt class="docutils literal">Storage &gt; File systems</tt>, click the <tt class="docutils literal">Create</tt> button and
+format the primary <span class="caps">USB</span> memory device in <span class="caps">EXT4</span>. You can <tt class="docutils literal">Mount</tt> the drive using
+the web interface after&nbsp;that.</p>
+</div>
+<div class="section" id="user-account-for-sharing">
+<h2>05. User account for sharing<a class="headerlink" href="#user-account-for-sharing" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Navigate to <tt class="docutils literal">Access Rights Management &gt; User</tt> menu and create a new user
+account. We&#8217;ll use this as the account to login to the <span class="caps">NAS</span> with from client&nbsp;devices.</p>
+</div>
+<div class="section" id="configuring-a-smb-share-folder">
+<h2>06. Configuring a <span class="caps">SMB</span> share folder<a class="headerlink" href="#configuring-a-smb-share-folder" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Navigate to <tt class="docutils literal">Services &gt; <span class="caps">SMB</span>/<span class="caps">CIFS</span></tt>. Select the <tt class="docutils literal">Shares</tt> tab and add a new
+shared folder. You might need to create one on our primary <span class="caps">USB</span> memory device.
+Set the permissions as appropiate, return to the <tt class="docutils literal">Settings</tt> tab and <tt class="docutils literal">Enable</tt>
+the <span class="caps">SMB</span>&nbsp;share.</p>
+<p>At this point, you should be able to use another system on same network to
+connect to the network share (<span class="caps">IP</span> address of the Rpi) using the user account we
+created in the earlier step. While it might be possible to use the <tt class="docutils literal">admin</tt>
+account, I think it&#8217;s bad practise to share a root-level account like&nbsp;that.</p>
+</div>
+<div class="section" id="usb-backup">
+<h2>07. <span class="caps">USB</span> backup<a class="headerlink" href="#usb-backup" title="Permalink to this headline">&nbsp;#</a></h2>
+<p><span class="caps">OMV</span> doesn&#8217;t come with <span class="caps">USB</span> backup as part of it&#8217;s default configuration. You need
+to add it in as a plugin. Navigate to <tt class="docutils literal">System &gt; Plugins</tt> and you should find
+it listed under <tt class="docutils literal">Section:Backup</tt>. Install it and you&#8217;ll find a new option
+<tt class="docutils literal">Services &gt; <span class="caps">USB</span> Backup</tt>. You can create new backup jobs which will trigger
+the first time they are created and whenever the <span class="caps">USB</span> drive is inserted into
+the board. I select the <tt class="docutils literal">From shared folder to external storage</tt> mode for
+these jobs. It might be first required to insert the backup drives and reformat
+them to <span class="caps">EXT4</span> before making the&nbsp;jobs.</p>
+</div>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2017/001-raspberry-pi-3-headless-wifi.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
