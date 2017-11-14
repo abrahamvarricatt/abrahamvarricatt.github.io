@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-05-28T00:00:00-04:00</updated><entry><title>NAS on Raspberry Pi with USB backup</title><link href="https://blog.abraham-v.com/articles/2017/002-nas-on-raspberry-pi-with-usb.html" rel="alternate"></link><published>2017-05-28T00:00:00-04:00</published><updated>2017-05-28T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-28:/articles/2017/002-nas-on-raspberry-pi-with-usb.html</id><summary type="html">&lt;p&gt;This post details the steps I took to configure a Network Accessable Storage
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-11-13T00:00:00-05:00</updated><entry><title>Cheap IRC web client - The Lounge</title><link href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html" rel="alternate"></link><published>2017-11-13T00:00:00-05:00</published><updated>2017-11-13T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-11-13:/articles/2017/003-cheap-irc-web-client.html</id><summary type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It&amp;#8217;s a good service that let&amp;#8217;s me stay
+connected to different chatrooms. In the year that I&amp;#8217;ve been a customer, it has
+served me well. So, why change? It costs &lt;span class="caps"&gt;USD&lt;/span&gt; $50/year. Recently, it has come to
+my attention that you can rent servers on vultr for just &lt;span class="caps"&gt;USD&lt;/span&gt;&amp;nbsp;$2.5/month.&lt;/p&gt;
+&lt;p&gt;Granted, it&amp;#8217;s a really low-end server, but for the needs of a single user it
+might just fit my needs. To my pleasant surprise, it&amp;nbsp;works!&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It&amp;#8217;s a good service that let&amp;#8217;s me stay
+connected to different chatrooms. In the year that I&amp;#8217;ve been a customer, it has
+served me well. So, why change? It costs &lt;span class="caps"&gt;USD&lt;/span&gt; $50/year. Recently, it has come to
+my attention that you can rent servers on vultr for just &lt;span class="caps"&gt;USD&lt;/span&gt;&amp;nbsp;$2.5/month.&lt;/p&gt;
+&lt;p&gt;Granted, it&amp;#8217;s a really low-end server, but for the needs of a single user it
+might just fit my needs. To my pleasant surprise, it&amp;nbsp;works!&lt;/p&gt;
+
+&lt;p&gt;The basic idea works like this - rent a server, install thelounge on it, setup
+credentials, activate it as a service and connect via a web&amp;nbsp;browser.&lt;/p&gt;
+&lt;p&gt;Renting a server was easy - just pay vultr, tell them I need the cheapest
+ubuntu server they could offer and save the root credentails - &lt;span class="caps"&gt;SSH&lt;/span&gt; to verify
+that the system was provisioned and I was in&amp;nbsp;business.&lt;/p&gt;
+&lt;p&gt;Installing thelounge was a bit tricky - I didn&amp;#8217;t know where to start! But that
+was solved by looking up the dependency tree. The Lounge was built on the
+nodejs interpretor. Which meant that I needed to get that installed. There were
+a few versions available, and I decided on the v6.x &lt;span class="caps"&gt;LTS&lt;/span&gt; series. Steps went like,
+install &lt;span class="caps"&gt;GPG&lt;/span&gt; key from nodesource, add the repository to apt-get and install&amp;nbsp;nodejs.&lt;/p&gt;
+&lt;p&gt;Installing louge was straight-forward after that. I wasn&amp;#8217;t interested in running
+anything else on the server, so I just installed it globally via the npm install
+command. Not really sure what that means from a system hardening perspective,
+but for a single user system, should be fine. I think. Worst case, just throw
+out the server, get a new one and&amp;nbsp;repeat.&lt;/p&gt;
+&lt;p&gt;Next step was to ensure that thelounge would be running as a service. Time to
+configure systemd. I made a configuration file and copied that over to my
+vultr&amp;nbsp;server.&lt;/p&gt;
+&lt;p&gt;Additionally, I also created a user.json file, self-signed &lt;span class="caps"&gt;SSL&lt;/span&gt; credentials and
+restarted the&amp;nbsp;server.&lt;/p&gt;
+&lt;p&gt;Last step was to connect to it over a web browser via &lt;span class="caps"&gt;IP&lt;/span&gt;. (Didn&amp;#8217;t want to setup
+&lt;span class="caps"&gt;DNS&lt;/span&gt; for&amp;nbsp;this)&lt;/p&gt;
+&lt;p&gt;And it&amp;nbsp;worked!&lt;/p&gt;
+&lt;p&gt;For my next step, I&amp;#8217;m thinking of automating the process. Perhaps I&amp;#8217;ll make a
+dedicated project on how to deploy the server and share it on github. I have
+an ansible script that I built, but that&amp;#8217;s for another&amp;nbsp;time.&lt;/p&gt;
+</content></entry><entry><title>NAS on Raspberry Pi with USB backup</title><link href="https://blog.abraham-v.com/articles/2017/002-nas-on-raspberry-pi-with-usb.html" rel="alternate"></link><published>2017-05-28T00:00:00-04:00</published><updated>2017-05-28T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-28:/articles/2017/002-nas-on-raspberry-pi-with-usb.html</id><summary type="html">&lt;p&gt;This post details the steps I took to configure a Network Accessable Storage
 (&lt;span class="caps"&gt;NAS&lt;/span&gt;) using the Samba protocol on a Raspberry Pi 3 running the Raspbian Jessie
 Lite distribution. This was done using the openmediavault (&lt;span class="caps"&gt;OMV&lt;/span&gt;)&amp;nbsp;project.&lt;/p&gt;
 &lt;p&gt;For redundancy purposes, a &lt;span class="caps"&gt;USB&lt;/span&gt; memory stick was configured as a backup location

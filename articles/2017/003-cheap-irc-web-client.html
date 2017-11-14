@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html">Cheap <span class="caps">IRC</span> web client - The&nbsp;Lounge</a></h1>
+      <h2>posted on<time datetime="2017-11-13T00:00:00-05:00"> 2017/11&#8209;Nov/13</time></h2>
+    </header>
+    <section><p>For a year, I subscribed to IRCCloud. It&#8217;s a good service that let&#8217;s me stay
+connected to different chatrooms. In the year that I&#8217;ve been a customer, it has
+served me well. So, why change? It costs <span class="caps">USD</span> $50/year. Recently, it has come to
+my attention that you can rent servers on vultr for just <span class="caps">USD</span>&nbsp;$2.5/month.</p>
+<p>Granted, it&#8217;s a really low-end server, but for the needs of a single user it
+might just fit my needs. To my pleasant surprise, it&nbsp;works!</p>
+
+<p>The basic idea works like this - rent a server, install thelounge on it, setup
+credentials, activate it as a service and connect via a web&nbsp;browser.</p>
+<p>Renting a server was easy - just pay vultr, tell them I need the cheapest
+ubuntu server they could offer and save the root credentails - <span class="caps">SSH</span> to verify
+that the system was provisioned and I was in&nbsp;business.</p>
+<p>Installing thelounge was a bit tricky - I didn&#8217;t know where to start! But that
+was solved by looking up the dependency tree. The Lounge was built on the
+nodejs interpretor. Which meant that I needed to get that installed. There were
+a few versions available, and I decided on the v6.x <span class="caps">LTS</span> series. Steps went like,
+install <span class="caps">GPG</span> key from nodesource, add the repository to apt-get and install&nbsp;nodejs.</p>
+<p>Installing louge was straight-forward after that. I wasn&#8217;t interested in running
+anything else on the server, so I just installed it globally via the npm install
+command. Not really sure what that means from a system hardening perspective,
+but for a single user system, should be fine. I think. Worst case, just throw
+out the server, get a new one and&nbsp;repeat.</p>
+<p>Next step was to ensure that thelounge would be running as a service. Time to
+configure systemd. I made a configuration file and copied that over to my
+vultr&nbsp;server.</p>
+<p>Additionally, I also created a user.json file, self-signed <span class="caps">SSL</span> credentials and
+restarted the&nbsp;server.</p>
+<p>Last step was to connect to it over a web browser via <span class="caps">IP</span>. (Didn&#8217;t want to setup
+<span class="caps">DNS</span> for&nbsp;this)</p>
+<p>And it&nbsp;worked!</p>
+<p>For my next step, I&#8217;m thinking of automating the process. Perhaps I&#8217;ll make a
+dedicated project on how to deploy the server and share it on github. I have
+an ansible script that I built, but that&#8217;s for another&nbsp;time.</p>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2017/002-nas-on-raspberry-pi-with-usb.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
