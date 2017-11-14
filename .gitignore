@@ -2,3 +2,6 @@ __pycache__/
 pelican-plugins/
 .python-version
 .idea
+pelican.pid
+srv.pid
+/output
