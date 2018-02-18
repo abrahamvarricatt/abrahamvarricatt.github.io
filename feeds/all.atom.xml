@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/all.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2017-11-13T00:00:00-05:00</updated><entry><title>Cheap IRC web client - The Lounge</title><link href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html" rel="alternate"></link><published>2017-11-13T00:00:00-05:00</published><updated>2017-11-13T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-11-13:/articles/2017/003-cheap-irc-web-client.html</id><summary type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It&amp;#8217;s a good service that let&amp;#8217;s me stay
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/all.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2018-02-18T00:00:00-05:00</updated><entry><title>Synchronizing time on a dual-boot system</title><link href="https://blog.abraham-v.com/articles/2018/001-sync-time-dual-boot.html" rel="alternate"></link><published>2018-02-18T00:00:00-05:00</published><updated>2018-02-18T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-02-18:/articles/2018/001-sync-time-dual-boot.html</id><summary type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
+the settings screen on Windows on each bootup, turning the time sync off/on was
+getting tiring. Here is how I solved the problem in a more permanent&amp;nbsp;manner.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
+the settings screen on Windows on each bootup, turning the time sync off/on was
+getting tiring. Here is how I solved the problem in a more permanent&amp;nbsp;manner.&lt;/p&gt;
+
+&lt;p&gt;The root cause of the issue is due to difference in behaviour with how each &lt;span class="caps"&gt;OS&lt;/span&gt;
+was treating the time reported by &lt;span class="caps"&gt;BIOS&lt;/span&gt;. Ubuntu treated it as &lt;span class="caps"&gt;UTC&lt;/span&gt; time, but
+Windows treated it as localtime. This meant that when either of the operating
+systems would sync time against an online time server, it would set the &lt;span class="caps"&gt;BIOS&lt;/span&gt;
+clock in a manner different than the other&amp;nbsp;expected.&lt;/p&gt;
+&lt;p&gt;Between the two approaches - use &lt;span class="caps"&gt;BIOS&lt;/span&gt; time as either &lt;span class="caps"&gt;UTC&lt;/span&gt; or local, I would
+personally prefer &lt;span class="caps"&gt;UTC&lt;/span&gt;. This would mean that &lt;span class="caps"&gt;BIOS&lt;/span&gt; would not need to be updated
+each time daylight savings came round every year, or if I was travelling and
+switched&amp;nbsp;time-zones.&lt;/p&gt;
+&lt;p&gt;Unfortunately, Windows does not make it easy to use the &lt;span class="caps"&gt;BIOS&lt;/span&gt; clock as &lt;span class="caps"&gt;UTC&lt;/span&gt; time.
+Technically it&amp;#8217;s possible, but it involves messing around with the Registry
+Editor and I&amp;#8217;m worried that other applications wouldn&amp;#8217;t play well with the&amp;nbsp;changes.&lt;/p&gt;
+&lt;p&gt;Which leaves modifying Ubuntu as the other option. Fortunately, this isn&amp;#8217;t too
+difficult. Just run the following&amp;nbsp;command,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ timedatectl set-local-rtc &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What the above does, is tell Ubuntu to treat the &lt;span class="caps"&gt;BIOS&lt;/span&gt; clock as localtime.
+Restarting my system a few times and switching between the &lt;span class="caps"&gt;OS&lt;/span&gt;&amp;#8217;s confirms that
+it&amp;nbsp;works.&lt;/p&gt;
+</content></entry><entry><title>Cheap IRC web client - The Lounge</title><link href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html" rel="alternate"></link><published>2017-11-13T00:00:00-05:00</published><updated>2017-11-13T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-11-13:/articles/2017/003-cheap-irc-web-client.html</id><summary type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It&amp;#8217;s a good service that let&amp;#8217;s me stay
 connected to different chatrooms. In the year that I&amp;#8217;ve been a customer, it has
 served me well. So, why change? It costs &lt;span class="caps"&gt;USD&lt;/span&gt; $50/year. Recently, it has come to
 my attention that you can rent servers on vultr for just &lt;span class="caps"&gt;USD&lt;/span&gt;&amp;nbsp;$2.5/month.&lt;/p&gt;

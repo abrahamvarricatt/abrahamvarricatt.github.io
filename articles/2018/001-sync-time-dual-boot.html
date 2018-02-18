@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2018/001-sync-time-dual-boot.html">Synchronizing time on a dual-boot&nbsp;system</a></h1>
+      <h2>posted on<time datetime="2018-02-18T00:00:00-05:00"> 2018/02&#8209;Feb/18</time></h2>
+    </header>
+    <section><p>The time displayed by my <span class="caps">OS</span> is different between Ubuntu and Windows 10. Opening
+the settings screen on Windows on each bootup, turning the time sync off/on was
+getting tiring. Here is how I solved the problem in a more permanent&nbsp;manner.</p>
+
+<p>The root cause of the issue is due to difference in behaviour with how each <span class="caps">OS</span>
+was treating the time reported by <span class="caps">BIOS</span>. Ubuntu treated it as <span class="caps">UTC</span> time, but
+Windows treated it as localtime. This meant that when either of the operating
+systems would sync time against an online time server, it would set the <span class="caps">BIOS</span>
+clock in a manner different than the other&nbsp;expected.</p>
+<p>Between the two approaches - use <span class="caps">BIOS</span> time as either <span class="caps">UTC</span> or local, I would
+personally prefer <span class="caps">UTC</span>. This would mean that <span class="caps">BIOS</span> would not need to be updated
+each time daylight savings came round every year, or if I was travelling and
+switched&nbsp;time-zones.</p>
+<p>Unfortunately, Windows does not make it easy to use the <span class="caps">BIOS</span> clock as <span class="caps">UTC</span> time.
+Technically it&#8217;s possible, but it involves messing around with the Registry
+Editor and I&#8217;m worried that other applications wouldn&#8217;t play well with the&nbsp;changes.</p>
+<p>Which leaves modifying Ubuntu as the other option. Fortunately, this isn&#8217;t too
+difficult. Just run the following&nbsp;command,</p>
+<div class="highlight"><pre><span></span>$ timedatectl set-local-rtc <span class="m">1</span>
+</pre></div>
+<p>What the above does, is tell Ubuntu to treat the <span class="caps">BIOS</span> clock as localtime.
+Restarting my system a few times and switching between the <span class="caps">OS</span>&#8217;s confirms that
+it&nbsp;works.</p>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
