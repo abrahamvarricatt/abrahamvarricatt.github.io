@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2018/002-visualize-bootstrap4-breakpoints.html">Visualizing Bootstrap 4&nbsp;breakpoints</a></h1>
+      <h2>posted on<time datetime="2018-05-21T00:00:00-04:00"> 2018/05&#8209;May/21</time></h2>
+    </header>
+    <section><p>When designing websites using Bootstrap 4, I found it challenging to figure out
+which widths corresponded to which breakpoint. This post describes the <span class="caps">HTML</span>
+layout I came up with to display a small banner (during development) to help me
+visualize the different&nbsp;breakpoints.</p>
+
+<p>Bootstrap 4 comes with many sets of breakpoints for different screen widths and
+devices - xs, sm, md, lg and xl. These affect the column widths in the grid
+system. Bootstrap 4 grids need to be wrapped around a <tt class="docutils literal">container</tt> element. The
+<tt class="docutils literal">container</tt> can have <tt class="docutils literal">row</tt> elements, which in turn will have <tt class="docutils literal">col</tt>
+elements. The columns can have different widths depending on the specified&nbsp;breakpoint.</p>
+<p>I wanted a way to display a banner indicating which breakpoint was currently
+active. This meant creating a single <tt class="docutils literal">container</tt> with 5 different <tt class="docutils literal">row</tt>
+div&#8217;s. Each div would have some text (and styling) indicating a different
+breakpoint. However, it would not be useful to display all of them at the same&nbsp;time.</p>
+<p>According to the Bootstrap 4 documentation, the way to hide elements is to use
+the <tt class="docutils literal">display</tt> classes. This took me a bit of time to wrap my head around, but
+once I figured out that they work identical to how columns are setup - it
+immediately clicked in my&nbsp;head!</p>
+<p>Here is the resulting code I&nbsp;created,</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span>
+          <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0, shrink-to-fit=no&quot;</span><span class="p">&gt;</span>
+
+    <span class="c">&lt;!-- Bootstrap CSS --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;css/bootstrap.min.css&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Responsive Banner<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container-fluid&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row d-block d-sm-none&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col bg-primary text-white text-center&quot;</span><span class="p">&gt;</span>Extra Small<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row d-none d-sm-block d-md-none&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col bg-secondary text-white text-center&quot;</span><span class="p">&gt;</span>Small<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row d-none d-md-block d-lg-none&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col bg-success text-white text-center&quot;</span><span class="p">&gt;</span>Medium<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row d-none d-lg-block d-xl-none&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col bg-info text-white text-center&quot;</span><span class="p">&gt;</span>Large<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row d-none d-xl-block&quot;</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col bg-warning text-dark text-center&quot;</span><span class="p">&gt;</span>Extra Large<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>In the first iteration of this, I used <tt class="docutils literal">container</tt> instead of
+<tt class="docutils literal"><span class="pre">container-fluid</span></tt>, but it feels better when the banner is end-to-end, so the
+latter was&nbsp;selected.</p>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2018/001-sync-time-dual-boot.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>

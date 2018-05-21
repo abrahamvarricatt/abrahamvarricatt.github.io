@@ -1,5 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/all.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2018-02-18T00:00:00-05:00</updated><entry><title>Synchronizing time on a dual-boot system</title><link href="https://blog.abraham-v.com/articles/2018/001-sync-time-dual-boot.html" rel="alternate"></link><published>2018-02-18T00:00:00-05:00</published><updated>2018-02-18T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-02-18:/articles/2018/001-sync-time-dual-boot.html</id><summary type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/all.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2018-05-21T00:00:00-04:00</updated><entry><title>Visualizing Bootstrap 4 breakpoints</title><link href="https://blog.abraham-v.com/articles/2018/002-visualize-bootstrap4-breakpoints.html" rel="alternate"></link><published>2018-05-21T00:00:00-04:00</published><updated>2018-05-21T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-05-21:/articles/2018/002-visualize-bootstrap4-breakpoints.html</id><summary type="html">&lt;p&gt;When designing websites using Bootstrap 4, I found it challenging to figure out
+which widths corresponded to which breakpoint. This post describes the &lt;span class="caps"&gt;HTML&lt;/span&gt;
+layout I came up with to display a small banner (during development) to help me
+visualize the different&amp;nbsp;breakpoints.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;When designing websites using Bootstrap 4, I found it challenging to figure out
+which widths corresponded to which breakpoint. This post describes the &lt;span class="caps"&gt;HTML&lt;/span&gt;
+layout I came up with to display a small banner (during development) to help me
+visualize the different&amp;nbsp;breakpoints.&lt;/p&gt;
+
+&lt;p&gt;Bootstrap 4 comes with many sets of breakpoints for different screen widths and
+devices - xs, sm, md, lg and xl. These affect the column widths in the grid
+system. Bootstrap 4 grids need to be wrapped around a &lt;tt class="docutils literal"&gt;container&lt;/tt&gt; element. The
+&lt;tt class="docutils literal"&gt;container&lt;/tt&gt; can have &lt;tt class="docutils literal"&gt;row&lt;/tt&gt; elements, which in turn will have &lt;tt class="docutils literal"&gt;col&lt;/tt&gt;
+elements. The columns can have different widths depending on the specified&amp;nbsp;breakpoint.&lt;/p&gt;
+&lt;p&gt;I wanted a way to display a banner indicating which breakpoint was currently
+active. This meant creating a single &lt;tt class="docutils literal"&gt;container&lt;/tt&gt; with 5 different &lt;tt class="docutils literal"&gt;row&lt;/tt&gt;
+div&amp;#8217;s. Each div would have some text (and styling) indicating a different
+breakpoint. However, it would not be useful to display all of them at the same&amp;nbsp;time.&lt;/p&gt;
+&lt;p&gt;According to the Bootstrap 4 documentation, the way to hide elements is to use
+the &lt;tt class="docutils literal"&gt;display&lt;/tt&gt; classes. This took me a bit of time to wrap my head around, but
+once I figured out that they work identical to how columns are setup - it
+immediately clicked in my&amp;nbsp;head!&lt;/p&gt;
+&lt;p&gt;Here is the resulting code I&amp;nbsp;created,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="na"&gt;lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;en&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt;
+          &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;width=device-width, initial-scale=1.0, shrink-to-fit=no&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class="c"&gt;&amp;lt;!-- Bootstrap CSS --&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;stylesheet&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;css/bootstrap.min.css&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Responsive Banner&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;container-fluid&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;row d-block d-sm-none&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;col bg-primary text-white text-center&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Extra Small&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;row d-none d-sm-block d-md-none&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;col bg-secondary text-white text-center&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Small&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;row d-none d-md-block d-lg-none&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;col bg-success text-white text-center&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Medium&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;row d-none d-lg-block d-xl-none&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;col bg-info text-white text-center&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Large&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;row d-none d-xl-block&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;col bg-warning text-dark text-center&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Extra Large&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In the first iteration of this, I used &lt;tt class="docutils literal"&gt;container&lt;/tt&gt; instead of
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;container-fluid&lt;/span&gt;&lt;/tt&gt;, but it feels better when the banner is end-to-end, so the
+latter was&amp;nbsp;selected.&lt;/p&gt;
+</content></entry><entry><title>Synchronizing time on a dual-boot system</title><link href="https://blog.abraham-v.com/articles/2018/001-sync-time-dual-boot.html" rel="alternate"></link><published>2018-02-18T00:00:00-05:00</published><updated>2018-02-18T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-02-18:/articles/2018/001-sync-time-dual-boot.html</id><summary type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
 the settings screen on Windows on each bootup, turning the time sync off/on was
 getting tiring. Here is how I solved the problem in a more permanent&amp;nbsp;manner.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
