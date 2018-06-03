@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2018/003-python-memory-usage.html">Python Memory&nbsp;Usage</a></h1>
+      <h2>posted on<time datetime="2018-06-03T00:00:00-04:00"> 2018/06&#8209;Jun/03</time></h2>
+    </header>
+    <section><p>The Python language has a feature called <cite>Generator Expressions</cite> which were
+introduced with <span class="caps">PEP</span> 289. You can think of them as a better way of doing certain
+operations involving lists. This post is more interested in the memory benefits
+the feature provides. We will first introduce the <cite>memory_profiler</cite> tool which
+can be used to measure the memory usage of a python program. We will then
+compare two different pieces of code (one with and the other without generator
+expressions) which perform the same operation, explaining why one is more
+superior than the other. Finally, we will run a few experiments to demonstrate
+and prove our&nbsp;assertion.</p>
+
+<p>When we talk about measuring the memory usage of python code, we are usually
+interested in determining memory expense on a line-by-line basis. The
+<tt class="docutils literal">memory_profiler</tt> tool ( ref: <a class="reference external" href="https://github.com/pythonprofilers/memory_profiler">https://github.com/pythonprofilers/memory_profiler</a> )
+is ideal for this purpose. Here is example code of how it can be&nbsp;used,</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">memory_profiler</span> <span class="kn">import</span> <span class="n">profile</span>
+
+<span class="nd">@profile</span>
+<span class="k">def</span> <span class="nf">my_func</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">my_func</span><span class="p">()</span>
+</pre></div>
+<p>Executing the above will return the following&nbsp;output,</p>
+<div class="highlight"><pre><span></span>Line #    Mem usage    Increment   Line Contents
+================================================
+    22     34.1 MiB     34.1 MiB   @profile
+    23                             def my_func():
+    24     41.8 MiB      7.7 MiB       a = [1] * (10 ** 6)
+    25    194.2 MiB    152.4 MiB       b = [2] * (2 * 10 ** 7)
+    26     41.8 MiB   -152.3 MiB       del b
+    27     41.8 MiB      0.0 MiB       return a
+</pre></div>
+<p>The above clearly shows that one assignment statement is more expensive than the
+other as well as indicating that the delete operation actually recovers some
+memory&nbsp;back.</p>
+<p>What exactly is a Python generator expression? According to <span class="caps">PEP</span> 289, they are a
+high performance, memory efficient generalization of list comprehensions. That
+definition is a bit much for my tastes, so let&#8217;s just jump into an&nbsp;example;</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">memory_profiler</span> <span class="kn">import</span> <span class="n">profile</span>
+
+<span class="nd">@profile</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_test_function</span><span class="p">():</span>
+    <span class="n">THE_LIMIT</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">PP</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">THE_LIMIT</span><span class="p">))</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">NN</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">THE_LIMIT</span><span class="p">)])</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">my_test_function</span><span class="p">()</span>
+</pre></div>
+<p>Pay attention to the assingments to <tt class="docutils literal"><span class="caps">PP</span></tt> and <tt class="docutils literal"><span class="caps">NN</span></tt>. We calculate the sum of
+squares of all numbers upto a limit for both of them, but the implementation
+is a bit different. In the latter case, a temporary list is created which holds
+all the squares we need. The sum is calculated over this list. But with the
+former situation, no such temporary list is created. The sum gets incremented
+during each iteration of the for-loop. It feels very intuitive that one method
+will use more memory than the other. Executing the code confirms our&nbsp;hypothesis,</p>
+<div class="highlight"><pre><span></span>Line #    Mem usage    Increment   Line Contents
+================================================
+    13  34.2031 MiB  34.2031 MiB   @profile(precision=4)
+    14                             def my_test_function():
+    15  34.2031 MiB   0.0000 MiB       THE_LIMIT = 10000
+    16  34.2031 MiB   0.0000 MiB       PP = sum(x * x for x in range(THE_LIMIT))
+    17  34.2031 MiB   0.0000 MiB       a = 1
+    18  34.5898 MiB   0.3867 MiB       NN = sum([x * x for x in range(THE_LIMIT)])
+    19  34.5898 MiB   0.0000 MiB       b = 1
+</pre></div>
+<p>A most interesting things happens however, if were were to increase our limit
+by a factor of&nbsp;10;</p>
+<div class="highlight"><pre><span></span>Line #    Mem usage    Increment   Line Contents
+================================================
+    13  33.8555 MiB  33.8555 MiB   @profile(precision=4)
+    14                             def my_test_function():
+    15  33.8555 MiB   0.0000 MiB       THE_LIMIT = 100000
+    16  33.8555 MiB   0.0000 MiB       PP = sum(x * x for x in range(THE_LIMIT))
+    17  33.8555 MiB   0.0000 MiB       a = 1
+    18  37.7578 MiB   0.4219 MiB       NN = sum([x * x for x in range(THE_LIMIT)])
+    19  34.2773 MiB  -3.4805 MiB       b = 1
+</pre></div>
+<p>Very strangely, the assignment to <tt class="docutils literal">b</tt> recovers memory from the system! This
+troubled me a lot - it didn&#8217;t make sense that a random assignment statement
+should recover memory from our running application. Initially, I began to
+suspect that <tt class="docutils literal">memory_profiler</tt> was flawed - that investigation led me down a
+very deep rabbit hole which I may write about another time. But, for the
+purposes of this post, I do have an explanation for the above behaviour - the
+Python Garbage Collector! With a limit of <tt class="docutils literal">100000</tt>, the temporary list kept
+triggering garbage collection and <tt class="docutils literal">memory_profiler</tt> dutifully reports the
+system state as&nbsp;such.</p>
+<p>All-in-all, I&#8217;m satisfied with how this analysis turned out - the fact that
+generator expressions <em>do</em> save memory and that it&#8217;s possible to prove the&nbsp;fact!</p>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2018/002-visualize-bootstrap4-breakpoints.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
