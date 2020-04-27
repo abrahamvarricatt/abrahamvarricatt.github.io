@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2020/001-configuring-shell.html">Customizing my default shell to&nbsp;zsh</a></h1>
+      <h2>posted on<time datetime="2020-04-27T00:00:00-04:00"> 2020/04&#8209;Apr/27</time></h2>
+    </header>
+    <section><p>I like to change the default shell environment on systems that I use to <tt class="docutils literal">zsh</tt>
+and theme them a little. This post describes my usual&nbsp;changes.</p>
+
+<div class="section" id="installing-zsh">
+<h2>Installing zsh<a class="headerlink" href="#installing-zsh" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Here is how to install <tt class="docutils literal">zsh</tt> on an Ubuntu&nbsp;system,</p>
+<div class="highlight"><pre><span></span>$ sudo apt get install zsh
+</pre></div>
+<p>Next we need to change the default login shell for the current user. Here is the
+command (this is a bash&nbsp;commmand),</p>
+<div class="highlight"><pre><span></span>$ chsh -s <span class="k">$(</span>which zsh<span class="k">)</span>
+</pre></div>
+<p>After running the command, you need to log-off and log-in again. Just closing
+and re-opening the terminal isn&#8217;t enough. If you want to confirm the changes
+before logging off, you can visit <tt class="docutils literal">/etc/passwd</tt> to see the default shell
+configured for the different users. I suggest not to edit that file&nbsp;directly.</p>
+</div>
+<div class="section" id="installing-oh-my-zsh">
+<h2>Installing oh-my-zsh<a class="headerlink" href="#installing-oh-my-zsh" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>This could be done automatically, but I feel it gives more control to do it
+manually. First we need to clone the&nbsp;repository,</p>
+<div class="highlight"><pre><span></span>$ git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+</pre></div>
+<p>Next, to create a new zsh configuration&nbsp;file,</p>
+<div class="highlight"><pre><span></span>$ cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+</pre></div>
+<p>The above command will over-write the existing <tt class="docutils literal">.zshrc</tt> file. Considering that
+this was a clean install, I&#8217;m not concerned about making&nbsp;backups.</p>
+</div>
+<div class="section" id="configuring-powerlevel10k">
+<h2>Configuring powerlevel10k<a class="headerlink" href="#configuring-powerlevel10k" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>One of the reasons I like to use zsh - the wonderful theme support. There used
+to be an older 9k version of this theme which got depreciated. To install this
+version it is a simple matter of cloning the repo&nbsp;:)</p>
+<div class="highlight"><pre><span></span>$ git clone --depth<span class="o">=</span><span class="m">1</span> https://github.com/romkatv/powerlevel10k.git <span class="se">\</span>
+  <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k
+</pre></div>
+<p>And finally, to set <tt class="docutils literal"><span class="pre">ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span></tt> in the
+<tt class="docutils literal"><span class="pre">~/.zshrc</span></tt> file.</p>
+<p>After all this is done, opening a new shell will start a configuration utility
+for the theme. We can edit <tt class="docutils literal"><span class="pre">~/.p10k.zsh</span></tt> to customize the theme. Some of the
+changes I like to tweak&nbsp;are,</p>
+<blockquote>
+<ul class="simple">
+<li>disable <tt class="docutils literal">virtualenv</tt> config, since <tt class="docutils literal">pyenv</tt> takes care of&nbsp;it</li>
+<li>enable 2-line&nbsp;support</li>
+<li>changing the prompt to <tt class="docutils literal">$</tt> - am just more used to&nbsp;it</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="environment-customizations">
+<h2>Environment customizations<a class="headerlink" href="#environment-customizations" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Tools like <tt class="docutils literal">pyenv</tt> or <tt class="docutils literal">nvm</tt> need some customizations which I throw into the
+<tt class="docutils literal"><span class="pre">~/.zshrc</span></tt> file at this point (after installing oh-my-zsh&nbsp;).</p>
+</div>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2018/003-python-memory-usage.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2018-06-03T00:00:00-04:00</updated><entry><title>Python Memory Usage</title><link href="https://blog.abraham-v.com/articles/2018/003-python-memory-usage.html" rel="alternate"></link><published>2018-06-03T00:00:00-04:00</published><updated>2018-06-03T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-06-03:/articles/2018/003-python-memory-usage.html</id><summary type="html">&lt;p&gt;The Python language has a feature called &lt;cite&gt;Generator Expressions&lt;/cite&gt; which were
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2020-04-27T00:00:00-04:00</updated><entry><title>Customizing my default shell to zsh</title><link href="https://blog.abraham-v.com/articles/2020/001-configuring-shell.html" rel="alternate"></link><published>2020-04-27T00:00:00-04:00</published><updated>2020-04-27T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2020-04-27:/articles/2020/001-configuring-shell.html</id><summary type="html">&lt;p&gt;I like to change the default shell environment on systems that I use to &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt;
+and theme them a little. This post describes my usual changes.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;I like to change the default shell environment on systems that I use to &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt;
+and theme them a little. This post describes my usual&amp;nbsp;changes.&lt;/p&gt;
+
+&lt;div class="section" id="installing-zsh"&gt;
+&lt;h2&gt;Installing zsh&lt;a class="headerlink" href="#installing-zsh" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Here is how to install &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt; on an Ubuntu&amp;nbsp;system,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt get install zsh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next we need to change the default login shell for the current user. Here is the
+command (this is a bash&amp;nbsp;commmand),&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ chsh -s &lt;span class="k"&gt;$(&lt;/span&gt;which zsh&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After running the command, you need to log-off and log-in again. Just closing
+and re-opening the terminal isn&amp;#8217;t enough. If you want to confirm the changes
+before logging off, you can visit &lt;tt class="docutils literal"&gt;/etc/passwd&lt;/tt&gt; to see the default shell
+configured for the different users. I suggest not to edit that file&amp;nbsp;directly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-oh-my-zsh"&gt;
+&lt;h2&gt;Installing oh-my-zsh&lt;a class="headerlink" href="#installing-oh-my-zsh" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This could be done automatically, but I feel it gives more control to do it
+manually. First we need to clone the&amp;nbsp;repository,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Next, to create a new zsh configuration&amp;nbsp;file,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The above command will over-write the existing &lt;tt class="docutils literal"&gt;.zshrc&lt;/tt&gt; file. Considering that
+this was a clean install, I&amp;#8217;m not concerned about making&amp;nbsp;backups.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="configuring-powerlevel10k"&gt;
+&lt;h2&gt;Configuring powerlevel10k&lt;a class="headerlink" href="#configuring-powerlevel10k" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;One of the reasons I like to use zsh - the wonderful theme support. There used
+to be an older 9k version of this theme which got depreciated. To install this
+version it is a simple matter of cloning the repo&amp;nbsp;:)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git clone --depth&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; https://github.com/romkatv/powerlevel10k.git &lt;span class="se"&gt;\&lt;/span&gt;
+  &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ZSH_CUSTOM&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="p"&gt;~/.oh-my-zsh/custom&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/themes/powerlevel10k
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And finally, to set &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ZSH_THEME=&amp;quot;powerlevel10k/powerlevel10k&amp;quot;&lt;/span&gt;&lt;/tt&gt; in the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.zshrc&lt;/span&gt;&lt;/tt&gt; file.&lt;/p&gt;
+&lt;p&gt;After all this is done, opening a new shell will start a configuration utility
+for the theme. We can edit &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.p10k.zsh&lt;/span&gt;&lt;/tt&gt; to customize the theme. Some of the
+changes I like to tweak&amp;nbsp;are,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;disable &lt;tt class="docutils literal"&gt;virtualenv&lt;/tt&gt; config, since &lt;tt class="docutils literal"&gt;pyenv&lt;/tt&gt; takes care of&amp;nbsp;it&lt;/li&gt;
+&lt;li&gt;enable 2-line&amp;nbsp;support&lt;/li&gt;
+&lt;li&gt;changing the prompt to &lt;tt class="docutils literal"&gt;$&lt;/tt&gt; - am just more used to&amp;nbsp;it&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div class="section" id="environment-customizations"&gt;
+&lt;h2&gt;Environment customizations&lt;a class="headerlink" href="#environment-customizations" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Tools like &lt;tt class="docutils literal"&gt;pyenv&lt;/tt&gt; or &lt;tt class="docutils literal"&gt;nvm&lt;/tt&gt; need some customizations which I throw into the
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;~/.zshrc&lt;/span&gt;&lt;/tt&gt; file at this point (after installing oh-my-zsh&amp;nbsp;).&lt;/p&gt;
+&lt;/div&gt;
+</content></entry><entry><title>Python Memory Usage</title><link href="https://blog.abraham-v.com/articles/2018/003-python-memory-usage.html" rel="alternate"></link><published>2018-06-03T00:00:00-04:00</published><updated>2018-06-03T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-06-03:/articles/2018/003-python-memory-usage.html</id><summary type="html">&lt;p&gt;The Python language has a feature called &lt;cite&gt;Generator Expressions&lt;/cite&gt; which were
 introduced with &lt;span class="caps"&gt;PEP&lt;/span&gt; 289. You can think of them as a better way of doing certain
 operations involving lists. This post is more interested in the memory benefits
 the feature provides. We will first introduce the &lt;cite&gt;memory_profiler&lt;/cite&gt; tool which
@@ -7,7 +64,7 @@ can be used to measure the memory usage of a python program. We will then
 compare two different pieces of code (one with and the other without generator
 expressions) which perform the same operation, explaining why one is more
 superior than the other. Finally, we will run a few experiments to demonstrate
-and prove our&amp;nbsp;assertion.&lt;/p&gt;
+and prove our assertion.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The Python language has a feature called &lt;cite&gt;Generator Expressions&lt;/cite&gt; which were
 introduced with &lt;span class="caps"&gt;PEP&lt;/span&gt; 289. You can think of them as a better way of doing certain
 operations involving lists. This post is more interested in the memory benefits
@@ -106,7 +163,7 @@ generator expressions &lt;em&gt;do&lt;/em&gt; save memory and that it&amp;#8217;
 </content></entry><entry><title>Visualizing Bootstrap 4 breakpoints</title><link href="https://blog.abraham-v.com/articles/2018/002-visualize-bootstrap4-breakpoints.html" rel="alternate"></link><published>2018-05-21T00:00:00-04:00</published><updated>2018-05-21T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-05-21:/articles/2018/002-visualize-bootstrap4-breakpoints.html</id><summary type="html">&lt;p&gt;When designing websites using Bootstrap 4, I found it challenging to figure out
 which widths corresponded to which breakpoint. This post describes the &lt;span class="caps"&gt;HTML&lt;/span&gt;
 layout I came up with to display a small banner (during development) to help me
-visualize the different&amp;nbsp;breakpoints.&lt;/p&gt;
+visualize the different breakpoints.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;When designing websites using Bootstrap 4, I found it challenging to figure out
 which widths corresponded to which breakpoint. This post describes the &lt;span class="caps"&gt;HTML&lt;/span&gt;
 layout I came up with to display a small banner (during development) to help me
@@ -165,7 +222,7 @@ immediately clicked in my&amp;nbsp;head!&lt;/p&gt;
 latter was&amp;nbsp;selected.&lt;/p&gt;
 </content></entry><entry><title>Synchronizing time on a dual-boot system</title><link href="https://blog.abraham-v.com/articles/2018/001-sync-time-dual-boot.html" rel="alternate"></link><published>2018-02-18T00:00:00-05:00</published><updated>2018-02-18T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2018-02-18:/articles/2018/001-sync-time-dual-boot.html</id><summary type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
 the settings screen on Windows on each bootup, turning the time sync off/on was
-getting tiring. Here is how I solved the problem in a more permanent&amp;nbsp;manner.&lt;/p&gt;
+getting tiring. Here is how I solved the problem in a more permanent manner.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;The time displayed by my &lt;span class="caps"&gt;OS&lt;/span&gt; is different between Ubuntu and Windows 10. Opening
 the settings screen on Windows on each bootup, turning the time sync off/on was
 getting tiring. Here is how I solved the problem in a more permanent&amp;nbsp;manner.&lt;/p&gt;
@@ -189,12 +246,12 @@ difficult. Just run the following&amp;nbsp;command,&lt;/p&gt;
 &lt;p&gt;What the above does, is tell Ubuntu to treat the &lt;span class="caps"&gt;BIOS&lt;/span&gt; clock as localtime.
 Restarting my system a few times and switching between the &lt;span class="caps"&gt;OS&lt;/span&gt;&amp;#8217;s confirms that
 it&amp;nbsp;works.&lt;/p&gt;
-</content></entry><entry><title>Cheap IRC web client - The Lounge</title><link href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html" rel="alternate"></link><published>2017-11-13T00:00:00-05:00</published><updated>2017-11-13T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-11-13:/articles/2017/003-cheap-irc-web-client.html</id><summary type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It&amp;#8217;s a good service that let&amp;#8217;s me stay
-connected to different chatrooms. In the year that I&amp;#8217;ve been a customer, it has
+</content></entry><entry><title>Cheap IRC web client - The Lounge</title><link href="https://blog.abraham-v.com/articles/2017/003-cheap-irc-web-client.html" rel="alternate"></link><published>2017-11-13T00:00:00-05:00</published><updated>2017-11-13T00:00:00-05:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-11-13:/articles/2017/003-cheap-irc-web-client.html</id><summary type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It’s a good service that let’s me stay
+connected to different chatrooms. In the year that I’ve been a customer, it has
 served me well. So, why change? It costs &lt;span class="caps"&gt;USD&lt;/span&gt; $50/year. Recently, it has come to
-my attention that you can rent servers on vultr for just &lt;span class="caps"&gt;USD&lt;/span&gt;&amp;nbsp;$2.5/month.&lt;/p&gt;
-&lt;p&gt;Granted, it&amp;#8217;s a really low-end server, but for the needs of a single user it
-might just fit my needs. To my pleasant surprise, it&amp;nbsp;works!&lt;/p&gt;
+my attention that you can rent servers on vultr for just &lt;span class="caps"&gt;USD&lt;/span&gt; $2.5/month.&lt;/p&gt;
+&lt;p&gt;Granted, it’s a really low-end server, but for the needs of a single user it
+might just fit my needs. To my pleasant surprise, it works!&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;For a year, I subscribed to IRCCloud. It&amp;#8217;s a good service that let&amp;#8217;s me stay
 connected to different chatrooms. In the year that I&amp;#8217;ve been a customer, it has
 served me well. So, why change? It costs &lt;span class="caps"&gt;USD&lt;/span&gt; $50/year. Recently, it has come to
@@ -230,9 +287,9 @@ dedicated project on how to deploy the server and share it on github. I have
 an ansible script that I built, but that&amp;#8217;s for another&amp;nbsp;time.&lt;/p&gt;
 </content></entry><entry><title>NAS on Raspberry Pi with USB backup</title><link href="https://blog.abraham-v.com/articles/2017/002-nas-on-raspberry-pi-with-usb.html" rel="alternate"></link><published>2017-05-28T00:00:00-04:00</published><updated>2017-05-28T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-28:/articles/2017/002-nas-on-raspberry-pi-with-usb.html</id><summary type="html">&lt;p&gt;This post details the steps I took to configure a Network Accessable Storage
 (&lt;span class="caps"&gt;NAS&lt;/span&gt;) using the Samba protocol on a Raspberry Pi 3 running the Raspbian Jessie
-Lite distribution. This was done using the openmediavault (&lt;span class="caps"&gt;OMV&lt;/span&gt;)&amp;nbsp;project.&lt;/p&gt;
+Lite distribution. This was done using the openmediavault (&lt;span class="caps"&gt;OMV&lt;/span&gt;) project.&lt;/p&gt;
 &lt;p&gt;For redundancy purposes, a &lt;span class="caps"&gt;USB&lt;/span&gt; memory stick was configured as a backup location
-for the shared&amp;nbsp;folder.&lt;/p&gt;
+for the shared folder.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;This post details the steps I took to configure a Network Accessable Storage
 (&lt;span class="caps"&gt;NAS&lt;/span&gt;) using the Samba protocol on a Raspberry Pi 3 running the Raspbian Jessie
 Lite distribution. This was done using the openmediavault (&lt;span class="caps"&gt;OMV&lt;/span&gt;)&amp;nbsp;project.&lt;/p&gt;
@@ -324,9 +381,9 @@ them to &lt;span class="caps"&gt;EXT4&lt;/span&gt; before making the&amp;nbsp;jo
 </content></entry><entry><title>Raspberry Pi 3 for headless wifi</title><link href="https://blog.abraham-v.com/articles/2017/001-raspberry-pi-3-headless-wifi.html" rel="alternate"></link><published>2017-05-13T00:00:00-04:00</published><updated>2017-05-13T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-13:/articles/2017/001-raspberry-pi-3-headless-wifi.html</id><summary type="html">&lt;p&gt;After following these instructions you will have a bootable microSD card which
 can be inserted into a Raspberry Pi 3 to load up the Raspbian Lite image,
 configured to auto-connect to your wifi network, with a server you can &lt;span class="caps"&gt;SSH&lt;/span&gt; into.
-For good measure, we will also enable the &lt;span class="caps"&gt;UART&lt;/span&gt; serial&amp;nbsp;console.&lt;/p&gt;
+For good measure, we will also enable the &lt;span class="caps"&gt;UART&lt;/span&gt; serial console.&lt;/p&gt;
 &lt;p&gt;All the work is being done on a traditional x86-based Linux laptop - the Pi
-won&amp;#8217;t be needed until you actually want to boot the&amp;nbsp;image!&lt;/p&gt;
+won’t be needed until you actually want to boot the image!&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;After following these instructions you will have a bootable microSD card which
 can be inserted into a Raspberry Pi 3 to load up the Raspbian Lite image,
 configured to auto-connect to your wifi network, with a server you can &lt;span class="caps"&gt;SSH&lt;/span&gt; into.
@@ -401,8 +458,8 @@ About 1 - 3 minutes works for me with a Class 10 microSD card. For convenience,
 you might want to configure the &lt;span class="caps"&gt;DHCP&lt;/span&gt; server on your network to allocate a
 static &lt;span class="caps"&gt;IP&lt;/span&gt; address to the Pi 3&amp;nbsp;board.&lt;/p&gt;
 &lt;/div&gt;
-</content></entry><entry><title>Hello World</title><link href="https://blog.abraham-v.com/articles/2017/0000-hello-world.html" rel="alternate"></link><published>2017-05-01T00:00:00-04:00</published><updated>2017-05-01T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-01:/articles/2017/0000-hello-world.html</id><summary type="html">&lt;p&gt;And for the nth time, I&amp;#8217;m starting a new blog. It&amp;#8217;s a bit sad that I keep
-making these and changing them, but perhaps that&amp;#8217;s the nature of&amp;nbsp;things?&lt;/p&gt;
+</content></entry><entry><title>Hello World</title><link href="https://blog.abraham-v.com/articles/2017/0000-hello-world.html" rel="alternate"></link><published>2017-05-01T00:00:00-04:00</published><updated>2017-05-01T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2017-05-01:/articles/2017/0000-hello-world.html</id><summary type="html">&lt;p&gt;And for the nth time, I’m starting a new blog. It’s a bit sad that I keep
+making these and changing them, but perhaps that’s the nature of things?&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;And for the nth time, I&amp;#8217;m starting a new blog. It&amp;#8217;s a bit sad that I keep
 making these and changing them, but perhaps that&amp;#8217;s the nature of&amp;nbsp;things?&lt;/p&gt;
 
