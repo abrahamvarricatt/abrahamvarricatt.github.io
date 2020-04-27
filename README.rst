@@ -1,12 +1,26 @@
 Note 2 self:
 
-when writing a new post, you can run
+#######################
+How to do a clean setup
+#######################
 
-$ make devserver
+1. Clone this repository
+2. Clone the pelican plugins repository locally ``git clone --recursive https://github.com/getpelican/pelican-plugins``
 
-and access a local version of the site at http://localhost:8000/
 
-when it's time to deploy to github pages, use,
+##################
+Writing a new post
+##################
+
+1. Make a new file inside the ``content/articles/20XX`` folder
+2. You can preview the post via ``$ make devserver``
+3. Visit http://localhost:8000/ to check new post1
+4. You can kill the local server via ``$ make stopserver``
+
+##########
+Publishing
+##########
+
+After saving the changes, you can use the following to deploy to github pages,
 
 $ make github
-

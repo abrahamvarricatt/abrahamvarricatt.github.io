@@ -5,3 +5,4 @@ pelican-plugins/
 pelican.pid
 srv.pid
 /output
+.vscode/
