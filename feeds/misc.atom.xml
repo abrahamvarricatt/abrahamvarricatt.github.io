@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2020-04-27T00:00:00-04:00</updated><entry><title>Customizing my default shell to zsh</title><link href="https://blog.abraham-v.com/articles/2020/001-configuring-shell.html" rel="alternate"></link><published>2020-04-27T00:00:00-04:00</published><updated>2020-04-27T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2020-04-27:/articles/2020/001-configuring-shell.html</id><summary type="html">&lt;p&gt;I like to change the default shell environment on systems that I use to &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Abraham Varricatt - misc</title><link href="https://blog.abraham-v.com/" rel="alternate"></link><link href="https://blog.abraham-v.com/feeds/misc.atom.xml" rel="self"></link><id>https://blog.abraham-v.com/</id><updated>2020-04-28T00:00:00-04:00</updated><entry><title>Installing docker and docker-machine on Ubuntu</title><link href="https://blog.abraham-v.com/articles/2020/002-installing-docker-and-docker-machine.html" rel="alternate"></link><published>2020-04-28T00:00:00-04:00</published><updated>2020-04-28T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2020-04-28:/articles/2020/002-installing-docker-and-docker-machine.html</id><summary type="html">&lt;p&gt;I want to be able to quickly spin up game servers for small sessions and tear
+them down afterwards. Online investigation reveals that &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;docker-machine&lt;/span&gt;&lt;/tt&gt;
+paired  with DigitalOcean as a provider might be just what is needed. That claim
+needs to be tested, but a pre-requisite is that the &lt;tt class="docutils literal"&gt;docker&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;docker-machine&lt;/span&gt;&lt;/tt&gt; tools be available on the local system. This post will
+describe how to install them on an Ubuntu box.&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;I want to be able to quickly spin up game servers for small sessions and tear
+them down afterwards. Online investigation reveals that &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;docker-machine&lt;/span&gt;&lt;/tt&gt;
+paired  with DigitalOcean as a provider might be just what is needed. That claim
+needs to be tested, but a pre-requisite is that the &lt;tt class="docutils literal"&gt;docker&lt;/tt&gt; and
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;docker-machine&lt;/span&gt;&lt;/tt&gt; tools be available on the local system. This post will
+describe how to install them on an Ubuntu&amp;nbsp;box.&lt;/p&gt;
+
+&lt;div class="section" id="repository-setup"&gt;
+&lt;h2&gt;Repository setup&lt;a class="headerlink" href="#repository-setup" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;First we need to get all our dependencies&amp;nbsp;installed,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get update
+
+$ sudo apt-get install &lt;span class="se"&gt;\&lt;/span&gt;
+    apt-transport-https &lt;span class="se"&gt;\&lt;/span&gt;
+    ca-certificates &lt;span class="se"&gt;\&lt;/span&gt;
+    curl &lt;span class="se"&gt;\&lt;/span&gt;
+    gnupg-agent &lt;span class="se"&gt;\&lt;/span&gt;
+    software-properties-common
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The purpose of installing the above is to allow the &lt;tt class="docutils literal"&gt;apt&lt;/tt&gt; command to be able
+to fetch repositories over &lt;span class="caps"&gt;HTTPS&lt;/span&gt;. Next we need to grab Docker&amp;#8217;s official &lt;span class="caps"&gt;GPG&lt;/span&gt;&amp;nbsp;key,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -fsSL https://download.docker.com/linux/debian/gpg &lt;span class="p"&gt;|&lt;/span&gt; sudo apt-key add -
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;It will be good to manually verify that we have the correct key with the
+following fingerprint = &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;9DC8&lt;/span&gt; 5822 &lt;span class="caps"&gt;9FC7&lt;/span&gt; &lt;span class="caps"&gt;DD38&lt;/span&gt; 854A &lt;span class="caps"&gt;E2D8&lt;/span&gt; 8D81 803C &lt;span class="caps"&gt;0EBF&lt;/span&gt; &lt;span class="caps"&gt;CD88&lt;/span&gt;&lt;/tt&gt;.
+We can search for installed fingerprints by the last few&amp;nbsp;characters,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-key fingerprint 0EBFCD88
+
+pub   4096R/0EBFCD88 &lt;span class="m"&gt;2017&lt;/span&gt;-02-22
+    Key &lt;span class="nv"&gt;fingerprint&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 9DC8 &lt;span class="m"&gt;5822&lt;/span&gt; 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release &lt;span class="o"&gt;(&lt;/span&gt;CE deb&lt;span class="o"&gt;)&lt;/span&gt; &amp;lt;docker@docker.com&amp;gt;
+sub   4096R/F273FCD8 &lt;span class="m"&gt;2017&lt;/span&gt;-02-22
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finally, we can use the following command to setup the stable&amp;nbsp;repository,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo add-apt-repository &lt;span class="se"&gt;\&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \&lt;/span&gt;
+&lt;span class="s2"&gt;    &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;lsb_release -cs&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; \&lt;/span&gt;
+&lt;span class="s2"&gt;    stable&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-docker-engine"&gt;
+&lt;h2&gt;Installing Docker Engine&lt;a class="headerlink" href="#installing-docker-engine" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;With the above done, it becomes very straight-forward to install the docker
+engine with the following&amp;nbsp;command,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-docker-machine"&gt;
+&lt;h2&gt;Installing Docker Machine&lt;a class="headerlink" href="#installing-docker-machine" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Strangely enough, the official suggestion is to download the Docker Machine
+binary and extract it to the user&amp;#8217;s &lt;span class="caps"&gt;PATH&lt;/span&gt; via this&amp;nbsp;command,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;base&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;https://github.com/docker/machine/releases/latest/download &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+    curl -L &lt;span class="nv"&gt;$base&lt;/span&gt;/docker-machine-&lt;span class="k"&gt;$(&lt;/span&gt;uname -s&lt;span class="k"&gt;)&lt;/span&gt;-&lt;span class="k"&gt;$(&lt;/span&gt;uname -m&lt;span class="k"&gt;)&lt;/span&gt; &amp;gt;/tmp/docker-machine &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+    sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;
+    chmod +x /usr/local/bin/docker-machine
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;At the time of typing, the lastest version for &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;docker-machine&lt;/span&gt;&lt;/tt&gt; is &lt;tt class="docutils literal"&gt;0.16.2&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</content></entry><entry><title>Customizing my default shell to zsh</title><link href="https://blog.abraham-v.com/articles/2020/001-configuring-shell.html" rel="alternate"></link><published>2020-04-27T00:00:00-04:00</published><updated>2020-04-27T00:00:00-04:00</updated><author><name>AbrahamV</name></author><id>tag:blog.abraham-v.com,2020-04-27:/articles/2020/001-configuring-shell.html</id><summary type="html">&lt;p&gt;I like to change the default shell environment on systems that I use to &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt;
 and theme them a little. This post describes my usual changes.&lt;/p&gt;
 </summary><content type="html">&lt;p&gt;I like to change the default shell environment on systems that I use to &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt;
 and theme them a little. This post describes my usual&amp;nbsp;changes.&lt;/p&gt;

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2020/002-installing-docker-and-docker-machine.html">Installing docker and docker-machine on&nbsp;Ubuntu</a></h1>
+      <h2>posted on<time datetime="2020-04-28T00:00:00-04:00"> 2020/04&#8209;Apr/28</time></h2>
+    </header>
+    <section><p>I want to be able to quickly spin up game servers for small sessions and tear
+them down afterwards. Online investigation reveals that <tt class="docutils literal"><span class="pre">docker-machine</span></tt>
+paired  with DigitalOcean as a provider might be just what is needed. That claim
+needs to be tested, but a pre-requisite is that the <tt class="docutils literal">docker</tt> and
+<tt class="docutils literal"><span class="pre">docker-machine</span></tt> tools be available on the local system. This post will
+describe how to install them on an Ubuntu&nbsp;box.</p>
+
+<div class="section" id="repository-setup">
+<h2>Repository setup<a class="headerlink" href="#repository-setup" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>First we need to get all our dependencies&nbsp;installed,</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get update
+
+$ sudo apt-get install <span class="se">\</span>
+    apt-transport-https <span class="se">\</span>
+    ca-certificates <span class="se">\</span>
+    curl <span class="se">\</span>
+    gnupg-agent <span class="se">\</span>
+    software-properties-common
+</pre></div>
+<p>The purpose of installing the above is to allow the <tt class="docutils literal">apt</tt> command to be able
+to fetch repositories over <span class="caps">HTTPS</span>. Next we need to grab Docker&#8217;s official <span class="caps">GPG</span>&nbsp;key,</p>
+<div class="highlight"><pre><span></span>$ curl -fsSL https://download.docker.com/linux/debian/gpg <span class="p">|</span> sudo apt-key add -
+</pre></div>
+<p>It will be good to manually verify that we have the correct key with the
+following fingerprint = <tt class="docutils literal"><span class="caps">9DC8</span> 5822 <span class="caps">9FC7</span> <span class="caps">DD38</span> 854A <span class="caps">E2D8</span> 8D81 803C <span class="caps">0EBF</span> <span class="caps">CD88</span></tt>.
+We can search for installed fingerprints by the last few&nbsp;characters,</p>
+<div class="highlight"><pre><span></span>$ sudo apt-key fingerprint 0EBFCD88
+
+pub   4096R/0EBFCD88 <span class="m">2017</span>-02-22
+    Key <span class="nv">fingerprint</span> <span class="o">=</span> 9DC8 <span class="m">5822</span> 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid                  Docker Release <span class="o">(</span>CE deb<span class="o">)</span> &lt;docker@docker.com&gt;
+sub   4096R/F273FCD8 <span class="m">2017</span>-02-22
+</pre></div>
+<p>Finally, we can use the following command to setup the stable&nbsp;repository,</p>
+<div class="highlight"><pre><span></span>$ sudo add-apt-repository <span class="se">\</span>
+    <span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span>
+<span class="s2">    </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> \</span>
+<span class="s2">    stable&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="installing-docker-engine">
+<h2>Installing Docker Engine<a class="headerlink" href="#installing-docker-engine" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>With the above done, it becomes very straight-forward to install the docker
+engine with the following&nbsp;command,</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+</pre></div>
+</div>
+<div class="section" id="installing-docker-machine">
+<h2>Installing Docker Machine<a class="headerlink" href="#installing-docker-machine" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>Strangely enough, the official suggestion is to download the Docker Machine
+binary and extract it to the user&#8217;s <span class="caps">PATH</span> via this&nbsp;command,</p>
+<div class="highlight"><pre><span></span>$ <span class="nv">base</span><span class="o">=</span>https://github.com/docker/machine/releases/latest/download <span class="o">&amp;&amp;</span>
+    curl -L <span class="nv">$base</span>/docker-machine-<span class="k">$(</span>uname -s<span class="k">)</span>-<span class="k">$(</span>uname -m<span class="k">)</span> &gt;/tmp/docker-machine <span class="o">&amp;&amp;</span>
+    sudo mv /tmp/docker-machine /usr/local/bin/docker-machine <span class="o">&amp;&amp;</span>
+    chmod +x /usr/local/bin/docker-machine
+</pre></div>
+<p>At the time of typing, the lastest version for <tt class="docutils literal"><span class="pre">docker-machine</span></tt> is <tt class="docutils literal">0.16.2</tt>.</p>
+</div>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2020/001-configuring-shell.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
