@@ -94,7 +94,7 @@ and theme them a little. This post describes my usual&amp;nbsp;changes.&lt;/p&gt
 &lt;div class="section" id="installing-zsh"&gt;
 &lt;h2&gt;Installing zsh&lt;a class="headerlink" href="#installing-zsh" title="Permalink to this headline"&gt;&amp;nbsp;#&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Here is how to install &lt;tt class="docutils literal"&gt;zsh&lt;/tt&gt; on an Ubuntu&amp;nbsp;system,&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt get install zsh
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install zsh
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Next we need to change the default login shell for the current user. Here is the
 command (this is a bash&amp;nbsp;commmand),&lt;/p&gt;
