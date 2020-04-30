@@ -14,7 +14,7 @@ Here is how to install ``zsh`` on an Ubuntu system,
 
 .. code-block:: shell
 
-    $ sudo apt get install zsh
+    $ sudo apt-get install zsh
 
 Next we need to change the default login shell for the current user. Here is the
 command (this is a bash commmand),
