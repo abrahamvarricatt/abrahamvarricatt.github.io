@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2020/003-showing-asterisks-in-terminal.html">Showing asterisks in&nbsp;terminal</a></h1>
+      <h2>posted on<time datetime="2020-04-30T00:00:00-04:00"> 2020/04&#8209;Apr/30</time></h2>
+    </header>
+    <section><p>It is very useful to see <tt class="docutils literal">***</tt> symbols appearing I type passwords in the
+terminal window. Sadly, the feature is not enabled by default when using
+<tt class="docutils literal">sudo</tt> in Ubuntu. Thankfully, it is simple to&nbsp;activate!</p>
+
+<p>Just open a new terminal and run the following&nbsp;command,</p>
+<p><tt class="docutils literal">`
+$ sudo visudo
+`</tt></p>
+<p>It should open a file in a text editor (Nano at the time of typing). We need to
+change the following line&nbsp;from,</p>
+<p><tt class="docutils literal">`
+Defaults env_reset
+`</tt></p>
+<p>to</p>
+<p><tt class="docutils literal">`
+Defaults env_reset,pwfeedback
+`</tt></p>
+<p>Press <tt class="docutils literal">Ctrl + X</tt> followed by <tt class="docutils literal">Y</tt> to save the file. Voila! We will now have
+asterisks when typing passwords in our&nbsp;terminal.</p>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2020/002-installing-docker-and-docker-machine.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
