@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="icon" href="https://blog.abraham-v.com/theme/images/favicon.ico" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/reset.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/pygments.css" />
+  <link rel="stylesheet" href="https://blog.abraham-v.com/theme/css/style.css" />
+  <title>Abraham Varricatt</title>
+</head>
+<body>
+  <div class="page">
+
+    <div class="site-glance site-glance-top">
+      <header>
+        <h1><a href="https://blog.abraham-v.com/">Abraham Varricatt</a></h1>
+        <h2>Note To Self</h2>
+        <hr />
+      </header>
+    </div>
+
+    <div class="articles">
+  <article>
+    <header>
+      <h1><a href="https://blog.abraham-v.com/articles/2020/005-differences-between-pyenv-and-pipx.html">Differences between Pyenv and&nbsp;Pipx</a></h1>
+      <h2>posted on<time datetime="2020-12-13T00:00:00-05:00"> 2020/12&#8209;Dec/13</time></h2>
+    </header>
+    <section><p>I have been told that <tt class="docutils literal">pipx</tt> is a very good tool to install and run Python
+applications in isolated environments. That description almost immediately
+reminds me of another tool - <tt class="docutils literal">pyenv</tt>. Even though they address different
+needs, I find myself mixing them up. The purpose of this post is to describe
+what the tools try to accomplish and how they go about doing so. A pre-requisite
+to this discussion is an introduction to how the system <tt class="docutils literal">$<span class="caps">PATH</span></tt> environment
+variable is&nbsp;used.</p>
+
+<div class="section" id="introducing-path">
+<h2>Introducing $<span class="caps">PATH</span><a class="headerlink" href="#introducing-path" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>At a fundamental level, <tt class="docutils literal">$<span class="caps">PATH</span></tt> is an environment variable which consists of
+a list of directories separated by colons (<tt class="docutils literal">:</tt>). Here is a quick&nbsp;example,</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="nv">$PATH</span>
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+</pre></div>
+<p>When a command is entered, the <span class="caps">OS</span> scans this group of directories (in the order
+given) for a corresponding executable to run. For example, assume we wish to
+run the <tt class="docutils literal"><span class="pre">docker-compose</span></tt> executable. Here are the different attempts the <span class="caps">OS</span>&nbsp;makes,</p>
+<div class="highlight"><pre><span></span>/usr/local/sbin/docker-compose  (NOT FOUND)
+/usr/local/bin/docker-compose  (NOT FOUND)
+/usr/sbin/docker-compose  (NOT FOUND)
+/usr/bin/docker-compose  (FOUND)
+</pre></div>
+<p>If it is unable to find the executable within any of the directories on the
+<tt class="docutils literal">$<span class="caps">PATH</span></tt> , an error message is returned to the&nbsp;user.</p>
+<p>A &#8230; divergence, or an exception to the above behaviour is when <tt class="docutils literal">shims</tt> are
+involved. You can think of them as light-weight utilities which process the
+name of the executable searched for within the directory and respond&nbsp;accordingly.</p>
+</div>
+<div class="section" id="about-pyenv">
+<h2>About pyenv<a class="headerlink" href="#about-pyenv" title="Permalink to this headline">&nbsp;#</a></h2>
+<p><tt class="docutils literal">pyenv</tt> is a tool to help manage different Python environments on the same
+system. For example, one might have Python 2.7 installed for one project and
+Python 3.8 installed for another. On this system, if we were to randomly run
+<tt class="docutils literal">$ python <span class="pre">--help</span></tt> which version would we reasonably expect to&nbsp;answer?</p>
+<p>One approach is to manually manage everything, adding or removing entries from
+<tt class="docutils literal">$<span class="caps">PATH</span></tt> as needed. This gets messy and troublesome. A better alternative is
+to use the <tt class="docutils literal">pyenv</tt> tool. When installed and initialized, <tt class="docutils literal">pyenv</tt> adds a
+custom <tt class="docutils literal">shim</tt> to the <tt class="docutils literal">$<span class="caps">PATH</span></tt> environment variable. The end result looks
+something like&nbsp;this,</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="nv">$PATH</span>
+/home/abrahamv/.pyenv/shims:/usr/local/sbin:/usr/local/bin ...
+</pre></div>
+<p>At the point, every command executed is processed via <tt class="docutils literal">pyenv</tt> (via the shim).
+If it decides that it is a Python-related command, <tt class="docutils literal">pyenv</tt> will redirect
+execution to the corrsponding Python&nbsp;executable.</p>
+<p>For the most part, this works very well. An interesting side-effect of this
+design, is that the <tt class="docutils literal">pyenv</tt> tool needs to be active on the system. In
+contrast, <tt class="docutils literal">pipx</tt> does&nbsp;not.</p>
+</div>
+<div class="section" id="about-pipx">
+<h2>About pipx<a class="headerlink" href="#about-pipx" title="Permalink to this headline">&nbsp;#</a></h2>
+<p>As per the official documentation &#8220;pipx is a tool to help you install and run
+end-user applications written in Python&#8221;. It will be helpful to understand what
+we mean by &#8220;end-user applications&#8221; in this context. The background is that
+Python and PyPI allow developers to distribute code with &#8220;console script entry
+points&#8221;. These allow users to call into the Python code from the command line,
+effectively acting as standalong&nbsp;applications.</p>
+<p>pipx is a tool to install and run any of these standalone applications in a
+safe, convenient and reliable&nbsp;way.</p>
+<p>On hearing all that, I expected to install <tt class="docutils literal">pipx</tt> as a global tool on my
+system, similar to what I did for <tt class="docutils literal">pyenv</tt>. It greatly confused me that this
+was not the case. In fact if you want to keep environments isolated, the
+easiest way to use pipx is to create a new Python virtual envrionment and just
+install it via <tt class="docutils literal">pip</tt> ! Something like&nbsp;this,</p>
+<div class="highlight"><pre><span></span>$ pyenv virtualenv <span class="m">3</span>.8.5 temp_for_pipx
+$ pyenv activate temp_for_pipx
+$ pip install pipx
+</pre></div>
+<p>At this point, let us assume that we want to install the <tt class="docutils literal">pycowsay</tt> <span class="caps">CLI</span> tool
+from PyPI. Since <tt class="docutils literal">pipx</tt> is already present in our current virtualenv, all we
+need to do&nbsp;is,</p>
+<div class="highlight"><pre><span></span>$ pipx install pycowsay
+</pre></div>
+<p>Running the above command will create a new virtualenv at
+<tt class="docutils literal"><span class="pre">/home/<span class="caps">USER</span>/.local/pipx/venvs</span></tt> and a symbolic link in the
+<tt class="docutils literal"><span class="pre">/home/<span class="caps">USER</span>/.local/bin</span></tt> directory which points to the executable within the&nbsp;virtualenv.</p>
+<p>What is most remarkable is that we can now delete the virtualenv created for
+<tt class="docutils literal">pipx</tt>, but our installation of <tt class="docutils literal">pycowsay</tt> will still be&nbsp;present!</p>
+<div class="highlight"><pre><span></span>$ pyenv deactivate temp_for_pipx
+$ pyenv uninstall temp_for_pipx
+$ pycowsay mooo
+zsh: ... bad interpreter: /home/USER/.local/pipx/venvs/pycowsay/bin/python: no such file or directory
+</pre></div>
+<p>Oookay. That was disappointing. Looks like my original intuition about <tt class="docutils literal">pipx</tt>
+being dependant on the virtualenv from where it gets installed from is&nbsp;accurate.</p>
+<p>In this scenario, what I would like to happen is for <tt class="docutils literal">pycowsay</tt> to pick up my
+&#8220;root&#8221; Python 3.8.5 executable. Hmm&#8230; according to the <tt class="docutils literal">pipx</tt> docs, that
+might be possible. Lets give this a&nbsp;shot,</p>
+<div class="highlight"><pre><span></span>$ pyenv virtualenv <span class="m">3</span>.8.5 temp_for_pipx
+$ pyenv activate temp_for_pipx
+$ pip install pipx
+$ pipx uninstall pycowsay     <span class="c1"># to remove the earlier installation</span>
+$ pipx install --python <span class="k">$(</span>pyenv root<span class="k">)</span>/versions/3.8.5/bin/python pycowsay
+$ pyenv deactivate temp_for_pipx
+$ pyenv uninstall temp_for_pipx
+$ pycowsay mooo
+
+----
+&lt; mooo &gt;
+----
+ <span class="se">\ </span>  ^__^
+  <span class="se">\ </span> <span class="o">(</span>oo<span class="o">)</span><span class="se">\_</span>______
+     <span class="o">(</span>__<span class="o">)</span><span class="se">\ </span>      <span class="o">)</span><span class="se">\/\</span>
+         <span class="o">||</span>----w <span class="p">|</span>
+         <span class="o">||</span>     <span class="o">||</span>
+</pre></div>
+<p>Yay! That&nbsp;worked!!</p>
+<p>In conclusion, this is going to my general approach to installing things via
+<tt class="docutils literal">pipx</tt>,</p>
+<div class="highlight"><pre><span></span>$ pipx install --python <span class="k">$(</span>pyenv root<span class="k">)</span>/versions/VERSION-NUMBER/bin/python &lt;TOOL&gt;
+</pre></div>
+</div>
+</section>
+  </article>
+  <hr />
+
+    <div class="paginator">
+        <a class="previous" href="https://blog.abraham-v.com/articles/2020/004-experiences-deploying-a-dotNet-webapp.html">&laquo; Older post</a>
+
+    </div>
+
+
+    </div>
+
+    <div class="site-glance site-glance-bottom">
+      <nav>
+        <p><a href="https://blog.abraham-v.com/archives.html">ARCHIVES</a></p>
+          <p><a href="https://blog.abraham-v.com/pages/about-me.html">About&nbsp;me</a></p>
+      </nav>
+    </div>
+  </div>
+</body>
+</html>
